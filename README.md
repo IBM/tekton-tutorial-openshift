@@ -267,7 +267,7 @@ This will be covered later on in the tutorial.
 Apply the file to your cluster to create the task.
 
 ```
-https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/kaniko/kaniko.yaml
+kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/kaniko/kaniko.yaml
 ```
 
 
