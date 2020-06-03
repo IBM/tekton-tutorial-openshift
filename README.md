@@ -820,6 +820,15 @@ tkn pipeline logs build-and-deploy-pipeline -L
 You should delete a PipelineRun when you no longer have a need to reference its logs.  Deleting the PipelineRun deletes the pods that were used
 to run the pipeline tasks.
 
+### 10. Check it out in OpenShift Console
+
+OpenShift provides a nice UI for the pipelines and the applications deployed. From the OpenShift console, click **developer** in the upper left drop-down to get to the developer view. Then click **Topology** to view your running app.
+
+![OpenShift Topology](images/openshift-topology.png)
+
+Click **Pipelines** to explore the pipline your created and explore the PipelineRuns
+
+![OpenShift Pipelines](images/openshift-pipelines.png)
 
 ## Summary
 
