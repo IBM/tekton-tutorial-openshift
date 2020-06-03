@@ -474,7 +474,7 @@ export EMAIL=<your IBM ID>
 
 kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=$(oc whoami) --from-literal=password=$(oc whoami -t)
 
-kubectl create secret docker-registry pull-secret --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL
+kubectl create secret docker-registry pull-secret --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL --docker-server=$REGISTRY
 ```
 
 
