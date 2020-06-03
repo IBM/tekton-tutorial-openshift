@@ -17,31 +17,6 @@ Before you start the tutorial you must set up a Kubernetes environment with Tekt
 
 Follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md)
 
-<!-- 
-* [Install the CLIs to manage a cluster](https://cloud.ibm.com/docs/containers?topic=containers-cs_cli_install#cs_cli_install_steps)
-
-* [Create a standard Kubernetes cluster in IBM Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-clusters#clusters_ui_standard)
-
-    **Note**:
-    * Tekton requires Kubernetes version 1.15 or higher.
-    * The tutorial uses a standard cluster because it supports dynamic provisioning of storage volumes.
-
-* [Create a private container registry in IBM Container Service](https://cloud.ibm.com/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
-
-* Install Tekton in your cluster.  This tutorial was written using Tekton version 0.11.1.  If you use a later version you may encounter some functional differences.
-
-    ```
-    kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.11.1/release.yaml
-    ```
-
-    Monitor the installation using the following command until all components show a Running status:
-
-    ```
-    kubectl get pods --namespace tekton-pipelines --watch
-    ``` -->
-
-<!-- * [Install the Tekton Pipelines CLI](https://github.com/tektoncd/cli#installing-tkn) -->
-
 
 ## Estimated time
 
@@ -79,6 +54,7 @@ Check out the `beta-update` branch after cloning.
 
 ```
 git clone https://github.com/odrodrig/tekton-tutorial
+cd tekton-tutorial
 git checkout beta-update
 ```
 
