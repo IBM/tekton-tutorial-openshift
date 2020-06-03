@@ -15,6 +15,9 @@ In this tutorial you'll learn
 
 Before you start the tutorial you must set up a Kubernetes environment with Tekton installed.
 
+Follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md)
+
+<!-- 
 * [Install the CLIs to manage a cluster](https://cloud.ibm.com/docs/containers?topic=containers-cs_cli_install#cs_cli_install_steps)
 
 * [Create a standard Kubernetes cluster in IBM Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-clusters#clusters_ui_standard)
@@ -35,9 +38,9 @@ Before you start the tutorial you must set up a Kubernetes environment with Tekt
 
     ```
     kubectl get pods --namespace tekton-pipelines --watch
-    ```
+    ``` -->
 
-* [Install the Tekton Pipelines CLI](https://github.com/tektoncd/cli#installing-tkn)
+<!-- * [Install the Tekton Pipelines CLI](https://github.com/tektoncd/cli#installing-tkn) -->
 
 
 ## Estimated time
@@ -75,7 +78,7 @@ You should clone this project to your workstation since you will need to edit so
 Check out the `beta-update` branch after cloning.
 
 ```
-git clone https://github.com/IBM/tekton-tutorial
+git clone https://github.com/odrodrig/tekton-tutorial
 git checkout beta-update
 ```
 
@@ -107,7 +110,7 @@ spec:
     description: git url to clone
     type: string
   - name: revision
-    description: git revision to checkout (branch, tag, sha, ref…)
+    description: git revision to checkout (branch, tag, sha, refï¿½)
     type: string
     default: master
   - name: submodules
@@ -459,21 +462,19 @@ Before running the pipeline, we need to set up a service account so that it can 
 The service account ties together a couple of secrets containing credentials for authentication
 along with RBAC-related resources for permission to create and modify certain Kubernetes resources.
 
-First you need to enable programmatic access to your private container registry by creating
-an IBM Cloud Identity and Access Management (IAM) API key.
-The process for creating a user API key is described [here](https://cloud.ibm.com/docs/services/Registry?topic=registry-registry_access#registry_access).
-
-After you have the API key, you can create the following secret.
+The first command will create a secret that contains credentials for accessing the internal OpenShift image registry
 
 ```
-kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=iamapikey --from-literal=password=<APIKEY>
+kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=$(oc whoami) --from-literal=password=$(oc whoami -t)
+```
+
+Next, run the `get routes` command to view the registry endpoint. Copy it and insert it into the command after that replacing `<REGISTRY>`.
+
+```
+kubectl get routes -n openshift-image-registry
+
 kubectl annotate secret ibm-registry-secret tekton.dev/docker-0=<REGISTRY>
 ```
-
-where
-
-* `<APIKEY>` is either the API key that you created
-* `<REGISTRY>` is the domain name of your container registry, such as `us.icr.io` (you can find out the domain name of your registry using the command `ibmcloud cr region`)
 
 This secret will be used to both push and pull images from your registry.
 
@@ -568,7 +569,7 @@ spec:
     - name: pathToYamlFile
       value: kubernetes/picalc.yaml
     - name: imageUrl
-      value: <REGISTRY>/<NAMESPACE>/picalc
+      value: <REGISTRY>/default/picalc
     - name: imageTag
       value: "1.0"
   serviceAccountName: pipeline-account
@@ -591,10 +592,9 @@ While you could use `name` to assign a unique name to your PipelineRun each time
 This example builds a [go program that calculates an approximation of pi](src/picalc.go).
 The source includes a [Dockerfile](src/Dockerfile) which runs tests, compiles the code, and builds an image for execution.
 
-    You must edit the `picalc-pipeline-run.yaml` file to substitute the values of `<REGISTRY>` and `<NAMESPACE>` with the information for your private container registry.
+    **You must edit** the `picalc-pipeline-run.yaml` file to substitute the values of `<REGISTRY>` with the information for your private container registry.
 
-    * To find the value for `<REGISTRY>`, enter the command `ibmcloud cr region`.
-    * To find the value for `<NAMESPACE>`, enter the command `ibmcloud cr namespace-list`.
+    * To find the value for `<REGISTRY>`, enter the command `oc get routes -n openshift-image-registry`.
 
 * The service account named `pipeline-account` which we created earlier is specified to provide the credentials needed for the pipeline to run successfully.
 
