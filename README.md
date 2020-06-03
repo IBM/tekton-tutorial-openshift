@@ -17,6 +17,11 @@ Before you start the tutorial you must set up a Kubernetes environment with Tekt
 
 Follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md)
 
+Create a route for the OpenShift registry if you have not done so already.
+
+```console
+oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"defaultRoute":true}}' --type=merge
+```
 
 ## Estimated time
 
