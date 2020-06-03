@@ -462,18 +462,25 @@ Before running the pipeline, we need to set up a service account so that it can 
 The service account ties together a couple of secrets containing credentials for authentication
 along with RBAC-related resources for permission to create and modify certain Kubernetes resources.
 
-The first command will create a secret that contains credentials for accessing the internal OpenShift image registry
+The 3rd command will create a secret that contains credentials for accessing the internal OpenShift image registry
 
-```
-kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=$(oc whoami) --from-literal=password=$(oc whoami -t)
-```
-
-Next, run the `get routes` command to view the registry endpoint. Copy it and insert it into the command after that replacing `<REGISTRY>`.
+Next, run the `get routes` command to view the registry endpoint. Copy it and insert it into the command after that replacing `<Registry route>`. Then, replace <your IBM ID> with the email address you used for the IBM Cloud account.
 
 ```
 kubectl get routes -n openshift-image-registry
 
-kubectl annotate secret ibm-registry-secret tekton.dev/docker-0=<REGISTRY>
+export REGISTRY=<Registry route>
+export EMAIL=<your IBM ID>
+
+kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=$(oc whoami) --from-literal=password=$(oc whoami -t)
+
+kubectl create secret docker-registry pull-secret --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL
+```
+
+
+
+```
+kubectl annotate secret ibm-registry-secret tekton.dev/docker-0=$REGISTRY
 ```
 
 This secret will be used to both push and pull images from your registry.
@@ -565,7 +572,7 @@ spec:
     name: build-and-deploy-pipeline
   params:
     - name: gitUrl
-      value: https://github.com/IBM/tekton-tutorial
+      value: https://github.com/odrodrig/tekton-tutorial
     - name: pathToYamlFile
       value: kubernetes/picalc.yaml
     - name: imageUrl
@@ -632,7 +639,7 @@ Note that we're using `kubectl create` here instead of `kubectl apply`.
 As mentioned previously a given PipelineRun resource can run a pipeline only once so you need to create a new one each time you want to run the pipeline.
 `kubectl` will respond with the generated name of the PipelineRun resource.
 
-Let's use the `tkn` CLI to check the status of the PipelineRun.
+<!-- Let's use the `tkn` CLI to check the status of the PipelineRun.
 While you can check the status of the pipeline using the `kubectl describe` command, the `tkn` cli provides much nicer output.
 
 ```
@@ -701,6 +708,22 @@ Taskruns
  picalc-pr-c7hsb-deploy-to-cluster-mwvfs   deploy-to-cluster   9 minutes ago    10 seconds   Succeeded
  picalc-pr-c7hsb-source-to-image-s8rrg     source-to-image     10 minutes ago   1 minute     Succeeded
  picalc-pr-c7hsb-clone-repo-pvbsk          clone-repo          12 minutes ago   1 minute     Succeeded
+``` -->
+
+Let's view the status of our pipeline run
+
+```
+kubectl get pipelinerun
+
+NAME              SUCCEEDED   REASON    STARTTIME   COMPLETIONTIME
+picalc-pr-dqwqb   Unknown     Running   5s    
+```
+
+The pipeline will be successful when `SUCCEEDED` is `True`.
+
+```
+NAME              SUCCEEDED   REASON      STARTTIME   COMPLETIONTIME
+picalc-pr-dqwqb   True        Succeeded   7m26s       4m49s
 ```
 
 Check the status of the Kubernetes deployment.  It should be ready.
