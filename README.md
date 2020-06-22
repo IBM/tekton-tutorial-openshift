@@ -1,6 +1,6 @@
-## Kubernetes Deployment using Tekton Pipelines
+## OpenShift Deployment using Tekton Pipelines
 
-Tekton is an open source project to configure and run CI/CD pipelines within a Kubernetes cluster.
+Tekton is an open source project to configure and run CI/CD pipelines within a OpenShift/Kubernetes cluster.
 
 
 ## Introduction
@@ -10,10 +10,11 @@ In this tutorial you'll learn
 * how to create a pipeline to build and deploy a container
 * how to run the pipeline, check its status and troubleshoot problems
 
+Also, check out this [very good tutorial](https://github.com/openshift/pipelines-tutorial) by Red Hat.
 
 ## Prerequisites
 
-Before you start the tutorial you must set up a Kubernetes environment with Tekton installed.
+Before you start the tutorial you must set up a OpenShift environment with Tekton installed.
 
 Follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md)
 
