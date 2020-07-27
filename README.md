@@ -78,7 +78,7 @@ You should clone this project to your workstation since you will need to edit so
 Check out the `beta-update` branch after cloning.
 
 ```
-git clone https://github.com/odrodrig/tekton-tutorial
+git clone https://github.com/IBM/tekton-tutorial-openshift
 git checkout beta-update
 ```
 
