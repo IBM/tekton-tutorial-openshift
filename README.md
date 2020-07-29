@@ -1,6 +1,6 @@
-## Kubernetes Deployment using Tekton Pipelines
+## OpenShift Deployment using Tekton Pipelines
 
-Tekton is an open source project to configure and run CI/CD pipelines within a Kubernetes cluster.
+Tekton is an open source project to configure and run CI/CD pipelines within a OpenShift/Kubernetes cluster.
 
 
 ## Introduction
@@ -10,38 +10,19 @@ In this tutorial you'll learn
 * how to create a pipeline to build and deploy a container
 * how to run the pipeline, check its status and troubleshoot problems
 
+Also, check out this [very good tutorial](https://github.com/openshift/pipelines-tutorial) by Red Hat.
 
 ## Prerequisites
 
-Before you start the tutorial you must set up a Kubernetes environment with Tekton installed.
+Before you start the tutorial you must set up a OpenShift environment with Tekton installed.
 
 Follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md)
 
-<!-- 
-* [Install the CLIs to manage a cluster](https://cloud.ibm.com/docs/containers?topic=containers-cs_cli_install#cs_cli_install_steps)
+Create a route for the OpenShift registry if you have not done so already.
 
-* [Create a standard Kubernetes cluster in IBM Kubernetes Service](https://cloud.ibm.com/docs/containers?topic=containers-clusters#clusters_ui_standard)
-
-    **Note**:
-    * Tekton requires Kubernetes version 1.15 or higher.
-    * The tutorial uses a standard cluster because it supports dynamic provisioning of storage volumes.
-
-* [Create a private container registry in IBM Container Service](https://cloud.ibm.com/docs/services/Registry?topic=registry-registry_setup_cli_namespace#registry_setup_cli_namespace)
-
-* Install Tekton in your cluster.  This tutorial was written using Tekton version 0.11.1.  If you use a later version you may encounter some functional differences.
-
-    ```
-    kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.11.1/release.yaml
-    ```
-
-    Monitor the installation using the following command until all components show a Running status:
-
-    ```
-    kubectl get pods --namespace tekton-pipelines --watch
-    ``` -->
-
-<!-- * [Install the Tekton Pipelines CLI](https://github.com/tektoncd/cli#installing-tkn) -->
-
+```console
+oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"defaultRoute":true}}' --type=merge
+```
 
 ## Estimated time
 
@@ -286,7 +267,7 @@ This will be covered later on in the tutorial.
 Apply the file to your cluster to create the task.
 
 ```
-https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/kaniko/kaniko.yaml
+kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/kaniko/kaniko.yaml
 ```
 
 
@@ -476,7 +457,6 @@ kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-au
 
 kubectl create secret docker-registry pull-secret --docker-server=$REGISTRY --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL
 ```
-
 
 
 ```
@@ -820,6 +800,15 @@ tkn pipeline logs build-and-deploy-pipeline -L
 You should delete a PipelineRun when you no longer have a need to reference its logs.  Deleting the PipelineRun deletes the pods that were used
 to run the pipeline tasks.
 
+### 10. Check it out in OpenShift Console
+
+OpenShift provides a nice UI for the pipelines and the applications deployed. From the OpenShift console, click **developer** in the upper left drop-down to get to the developer view. Then click **Topology** to view your running app.
+
+![OpenShift Topology](images/openshift-topology.png)
+
+Click **Pipelines** to explore the pipline your created and explore the PipelineRuns
+
+![OpenShift Pipelines](images/openshift-pipelines.png)
 
 ## Summary
 
