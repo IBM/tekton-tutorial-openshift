@@ -60,6 +60,7 @@ Check out the `beta-update` branch after cloning.
 
 ```
 git clone https://github.com/IBM/tekton-tutorial-openshift
+cd tekton-tutorial-openshift
 git checkout beta-update
 ```
 
