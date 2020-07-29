@@ -9,18 +9,24 @@ spec:
   params:
     - name: gitUrl
       description: Git repository url
+      type: string
     - name: gitRevision
       description: Git revision to check out
       default: master
+      type: string
     - name: pathToContext
       description: The path to the build context, used by Kaniko - within the workspace
       default: src
+      type: string
     - name: pathToYamlFile
       description: The path to the yaml file to deploy within the git source
+      type: string
     - name: imageUrl
       description: Image name including repository
+      type: string
     - name: imageTag
       description: Image tag
+      type: string
       default: "latest"
   tasks:
     - name: clone-repo

@@ -59,8 +59,7 @@ You should clone this project to your workstation since you will need to edit so
 Check out the `beta-update` branch after cloning.
 
 ```
-git clone https://github.com/odrodrig/tekton-tutorial
-cd tekton-tutorial
+git clone https://github.com/IBM/tekton-tutorial-openshift
 git checkout beta-update
 ```
 
@@ -456,9 +455,8 @@ export EMAIL=<your IBM ID>
 
 kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=$(oc whoami) --from-literal=password=$(oc whoami -t)
 
-kubectl create secret docker-registry pull-secret --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL --docker-server=$REGISTRY
+kubectl create secret docker-registry pull-secret --docker-server=$REGISTRY --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL
 ```
-
 
 
 ```

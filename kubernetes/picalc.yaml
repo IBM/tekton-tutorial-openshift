@@ -19,6 +19,8 @@ spec:
         ports:
         - name: http-server
           containerPort: 8080
+      imagePullSecrets:
+      - name: pull-secret
       serviceAccountName: pipeline-account
 ---
 apiVersion: v1
