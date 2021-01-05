@@ -1,11 +1,11 @@
-## OpenShift Deployment using Tekton Pipelines
+# OpenShift Deployment using Tekton Pipelines
 
 Tekton is an open source project to configure and run CI/CD pipelines within a OpenShift/Kubernetes cluster.
-
 
 ## Introduction
 
 In this tutorial you'll learn
+
 * what are the basic concepts used by Tekton pipelines
 * how to create a pipeline to build and deploy a container
 * how to run the pipeline, check its status and troubleshoot problems
@@ -28,9 +28,7 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"
 
 1 hour
 
-
 ## Steps
-
 
 ### 1. Tekton pipeline concepts
 
@@ -52,13 +50,12 @@ Let's create a simple pipeline that
 * builds a Docker image from source files and pushes it to your private container registry
 * deploys the image to your Kubernetes cluster
 
-
 ### 2. Clone the repository
 
 You should clone this project to your workstation since you will need to edit some of the yaml files before applying them to your cluster.
 Check out the `beta-update` branch after cloning.
 
-```
+```bash
 git clone https://github.com/IBM/tekton-tutorial-openshift
 cd tekton-tutorial-openshift
 git checkout beta-update
@@ -67,7 +64,6 @@ git checkout beta-update
 We will work from the bottom-up, i.e. first we will define the Task resources needed to build and deploy the image,
 then we'll define the Pipeline resource that references the tasks,
 and finally we'll create the PipelineRun resource needed to run the pipeline.
-
 
 ### 3. Create a task to clone the Git repository
 
@@ -78,7 +74,7 @@ It provides a `git-clone` task which is described [here](https://github.com/tekt
 
 The task is reproduced below so that we can talk about it.
 
-```
+```yaml
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -166,6 +162,7 @@ This task has one step that uses a Tekton-provided container to clone a Git repo
 
 A task can have parameters.  Parameters help to make a task reusable.
 This task accepts many parameters such as:
+
 * the URL of the Git repository to clone
 * the revision to check out
 
@@ -180,10 +177,9 @@ We'll see later how the workspace becomes associated with a storage volume.
 
 Apply the file to your cluster to create the task.
 
-```
+```bash
 kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/git/git-clone.yaml
 ```
-
 
 ### 4. Create a task to build an image and push it to a container registry
 
@@ -193,7 +189,7 @@ The task is described [here](https://github.com/tektoncd/catalog/tree/v1beta1/ka
 
 The task is reproduced below.
 
-```
+```yaml
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -267,10 +263,9 @@ This will be covered later on in the tutorial.
 
 Apply the file to your cluster to create the task.
 
-```
+```bash
 kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/kaniko/kaniko.yaml
 ```
-
 
 ### 5. Create a task to deploy an image to a Kubernetes cluster
 
@@ -278,7 +273,7 @@ The final function that the pipeline needs is a task that deploys a docker image
 Below is a Tekton task that does this.
 You can find this yaml file at [tekton/tasks/deploy-using-kubectl.yaml](tekton/tasks/deploy-using-kubectl.yaml).
 
-```
+```yaml
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -319,8 +314,7 @@ spec:
 
 This task has two steps.
 
-1. The first step runs `sed` in an Alpine Linux container to update the yaml file used for deployment with the image that was built by the `kaniko` task.
-The step requires the yaml file to have two character strings, `__IMAGE__` and `__DIGEST__`, which are substituted with parameter values.
+1. The first step runs `sed` in an Alpine Linux container to update the yaml file used for deployment with the image that was built by the `kaniko` task. The step requires the yaml file to have two character strings, `__IMAGE__` and `__DIGEST__`, which are substituted with parameter values.
 
 2. The second step runs `kubectl` using Lachlan Evenson's popular `k8s-kubectl` container image to apply the yaml file to the same cluster where the pipeline is running.
 
@@ -332,17 +326,16 @@ This will be covered later on in the tutorial.
 
 Apply the file to your cluster to create the task.
 
-```
+```bash
 kubectl apply -f tekton/tasks/deploy-using-kubectl.yaml
 ```
-
 
 ### 6. Create a pipeline
 
 Below is a Tekton pipeline that runs the tasks we defined above.
 You can find this yaml file at [tekton/pipeline/build-and-deploy-pipeline.yaml](tekton/pipeline/build-and-deploy-pipeline.yaml).
 
-```
+```yaml
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
@@ -429,14 +422,13 @@ In this example, the pipeline specifies that the `source-to-image` pipeline task
 
 The `deploy-using-kubectl` pipeline task must run after the `source-to-image` pipeline task but it doesn't need to specify the `runAfter` key.
 This is because it references a task result from the `source-to-image` pipeline task
-and Tekton is smart enough to figure out that this means it must run after that task. 
+and Tekton is smart enough to figure out that this means it must run after that task.
 
 Apply the file to your cluster to create the pipeline.
 
-```
+```bash
 kubectl apply -f tekton/pipeline/build-and-deploy-pipeline.yaml
 ```
-
 
 ### 7. Define a service account
 
@@ -446,9 +438,9 @@ along with RBAC-related resources for permission to create and modify certain Ku
 
 The 3rd command will create a secret that contains credentials for accessing the internal OpenShift image registry
 
-Next, run the `get routes` command to view the registry endpoint. Copy it and insert it into the command after that replacing `<Registry route>`. Then, replace <your IBM ID> with the email address you used for the IBM Cloud account.
+Next, run the `get routes` command to view the registry endpoint. Copy it and insert it into the command after that replacing `<Registry route>`. Then, replace `<your IBM ID>` with the email address you used for the IBM Cloud account.
 
-```
+```bash
 kubectl get routes -n openshift-image-registry
 
 export REGISTRY=<Registry route>
@@ -459,8 +451,7 @@ kubectl create secret generic ibm-registry-secret --type="kubernetes.io/basic-au
 kubectl create secret docker-registry pull-secret --docker-server=$REGISTRY --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL
 ```
 
-
-```
+```bash
 kubectl annotate secret ibm-registry-secret tekton.dev/docker-0=$REGISTRY
 ```
 
@@ -469,7 +460,7 @@ This secret will be used to both push and pull images from your registry.
 Now you can create the service account using the following yaml.
 You can find this yaml file at [tekton/pipeline-account.yaml](tekton/pipeline-account.yaml).
 
-```
+```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -518,22 +509,17 @@ subjects:
 
 This yaml creates the following Kubernetes resources:
 
-* A ServiceAccount named `pipeline-account`.
-The service account references the `ibm-registry-secret` secret so that the pipeline can authenticate to your private container registry
-when it pushes and pulls a container image.
+* A ServiceAccount named `pipeline-account`. The service account references the `ibm-registry-secret` secret so that the pipeline can authenticate to your private container registry when it pushes and pulls a container image.
 
-* A Secret named `kube-api-secret` which contains an API credential (generated by Kubernetes) for accessing the Kubernetes API.
-This allows the pipeline to use `kubectl` to talk to your cluster.
+* A Secret named `kube-api-secret` which contains an API credential (generated by Kubernetes) for accessing the Kubernetes API. This allows the pipeline to use `kubectl` to talk to your cluster.
 
-* A Role named `pipeline-role` and a RoleBinding named `pipeline-role-binding` which provide the resource-based access control permissions
-needed for this pipeline to create and modify Kubernetes resources.
+* A Role named `pipeline-role` and a RoleBinding named `pipeline-role-binding` which provide the resource-based access control permissions needed for this pipeline to create and modify Kubernetes resources.
 
 Apply the file to your cluster to create the service account and related resources.
 
-```
+```bash
 kubectl apply -f tekton/pipeline-account.yaml
 ```
-
 
 ### 8. Create a PipelineRun
 
@@ -543,7 +529,7 @@ It is now time to look at how one runs the pipeline.
 Below is a Tekton PipelineRun resource that runs the pipeline we defined above.
 You can find this yaml file at [tekton/run/picalc-pipeline-run.yaml](tekton/run/picalc-pipeline-run.yaml).
 
-```
+```yaml
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
@@ -569,20 +555,13 @@ spec:
 
 Although this file is small there is a lot going on here.  Let's break it down from top to bottom:
 
-* The PipelineRun does not have a fixed name.  It uses `generateName` to generate a name each time it is created.
-This is because a particular PipelineRun resource executes the pipeline only once.  If you want to run the pipeline again,
-you cannot modify an existing PipelineRun resource to request it to re-run -- you must create a new PipelineRun resource.
-While you could use `name` to assign a unique name to your PipelineRun each time you create one, it is much easier to use `generateName`.
+* The PipelineRun does not have a fixed name.  It uses `generateName` to generate a name each time it is created. This is because a particular PipelineRun resource executes the pipeline only once.  If you want to run the pipeline again, you cannot modify an existing PipelineRun resource to request it to re-run -- you must create a new PipelineRun resource. While you could use `name` to assign a unique name to your PipelineRun each time you create one, it is much easier to use `generateName`.
 
 * The Pipeline resource is identified under the `pipelineRef` key.
 
-* Parameters exposed by the pipeline are set to specific values such as the Git repository to clone, the image to build, and the yaml file to deploy.
-This example builds a [go program that calculates an approximation of pi](src/picalc.go).
-The source includes a [Dockerfile](src/Dockerfile) which runs tests, compiles the code, and builds an image for execution.
+* Parameters exposed by the pipeline are set to specific values such as the Git repository to clone, the image to build, and the yaml file to deploy. This example builds a [go program that calculates an approximation of pi](src/picalc.go). The source includes a [Dockerfile](src/Dockerfile) which runs tests, compiles the code, and builds an image for execution.
 
-    **You must edit** the `picalc-pipeline-run.yaml` file to substitute the values of `<REGISTRY>` with the information for your private container registry.
-
-    * To find the value for `<REGISTRY>`, enter the command `oc get routes -n openshift-image-registry`.
+  > **NOTE** *You must edit* the `picalc-pipeline-run.yaml` file to substitute the values of `<REGISTRY>` with the information for your private container registry. To find the value for `<REGISTRY>`, enter the command `oc get routes -n openshift-image-registry`.
 
 * The service account named `pipeline-account` which we created earlier is specified to provide the credentials needed for the pipeline to run successfully.
 
@@ -590,7 +569,7 @@ The source includes a [Dockerfile](src/Dockerfile) which runs tests, compiles th
 
 Before you run the pipeline for the first time, you must create the persistent volume claim for the workspace.
 
-```
+```bash
 kubectl create -f tekton/picalc-pipeline-pvc.yaml
 ```
 
@@ -600,18 +579,17 @@ There is [funtionality coming in Tekton](https://github.com/tektoncd/pipeline/pu
 
 Check that the persistent volume claim is bound before continuing.
 
-```
+```bash
 $ kubectl get pvc picalc-source-pvc
 NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS       AGE
 picalc-source-pvc   Bound    pvc-662946bc-57f2-4ba5-982c-b0fa9db1d065   20Gi       RWO            ibmc-file-bronze   2m
 ```
 
-
 ### 9. Run the pipeline
 
 All the pieces are in place to run the pipeline.
 
-```
+```bash
 $ kubectl create -f tekton/run/picalc-pipeline-run.yaml
 pipelinerun.tekton.dev/picalc-pr-c7hsb created
 ```
@@ -624,7 +602,7 @@ As mentioned previously a given PipelineRun resource can run a pipeline only onc
 While you can check the status of the pipeline using the `kubectl describe` command, the `tkn` cli provides much nicer output.
 
 ```
-$ tkn pipelinerun describe picalc-pr-c7hsb 
+$ tkn pipelinerun describe picalc-pr-c7hsb
 Name:              picalc-pr-c7hsb
 Namespace:         default
 Pipeline Ref:      build-and-deploy-pipeline
@@ -654,7 +632,7 @@ Taskruns
  picalc-pr-c7hsb-clone-repo-pvbsk        clone-repo        2 minutes ago    1 minute   Succeeded
 ```
 
-This tells us that the pipeline is running. 
+This tells us that the pipeline is running.
 The `clone-repo` pipeline task has completely successfully and the `source-to-image` pipeline task is currently running.
 
 Continue to rerun the command to check the status.  If the pipeline runs successfully, the description eventually should look like this:
@@ -693,23 +671,23 @@ Taskruns
 
 Let's view the status of our pipeline run
 
-```
+```bash
 kubectl get pipelinerun
 
 NAME              SUCCEEDED   REASON    STARTTIME   COMPLETIONTIME
-picalc-pr-dqwqb   Unknown     Running   5s    
+picalc-pr-dqwqb   Unknown     Running   5s
 ```
 
 The pipeline will be successful when `SUCCEEDED` is `True`.
 
-```
+```bash
 NAME              SUCCEEDED   REASON      STARTTIME   COMPLETIONTIME
 picalc-pr-dqwqb   True        Succeeded   7m26s       4m49s
 ```
 
 Check the status of the Kubernetes deployment.  It should be ready.
 
-```
+```bash
 $ kubectl get deploy picalc
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
 picalc   1/1     1            1           9m
@@ -719,7 +697,7 @@ You can curl the application using its NodePort service.
 First display the nodes and choose one of the node's external IP addresses.
 Then display the service to get its NodePort.
 
-```
+```bash
 $ kubectl get nodes -o wide
 NAME           STATUS   ROLES    AGE     VERSION       INTERNAL-IP    EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
 10.221.22.11   Ready    <none>   7d23h   v1.16.8+IKS   10.221.22.11   150.238.236.26   Ubuntu 18.04.4 LTS   4.15.0-96-generic   containerd://1.3.3
@@ -739,7 +717,7 @@ Let's take a look at what a PipelineRun failure would look like.
 Edit the PipelineRun yaml and change the gitUrl parameter to a non-existent Git repository to force a failure.
 Then create a new PipelineRun and describe it after letting it run for a minute or two.
 
-```
+```bash
 $ kubectl create -f tekton/picalc-pipeline-run.yaml
 pipelinerun.tekton.dev/picalc-pr-sk7md created
 
@@ -778,7 +756,7 @@ Taskruns
 
 The output tells us that the `clone-repo` pipeline task failed.  The `Message` also tells us how to get the logs from the pod which was used to run the task:
 
-```
+```bash
 for logs run: kubectl -n default logs picalc-pr-sk7md-clone-repo-8gs25-pod-v7fg8 -c step-clone
 ```
 
@@ -786,7 +764,7 @@ If you run that `kubectl logs` command you will see that there is a failure tryi
 
 An even easier way to get the logs from a PipelineRun is to use the `tkn` CLI.
 
-```
+```bash
 tkn pipelinerun logs picalc-pr-sk7md-clone-repo-8gs25-pod-v7fg8 -t clone-repo
 ```
 
@@ -794,7 +772,7 @@ If you omit the `-t` flag then the command will get the logs for all pipeline ta
 
 You can also get the logs for the last PipelineRun for a particular Pipeline using this command:
 
-```
+```bash
 tkn pipeline logs build-and-deploy-pipeline -L
 ```
 
@@ -816,7 +794,3 @@ Click **Pipelines** to explore the pipline your created and explore the Pipeline
 Tekton provides simple, easy-to-learn features for constructing CI/CD pipelines that run on Kubernetes.
 This tutorial covered the basics to get you started building your own pipelines.
 There are more features available and many more planned for upcoming releases.
-
-
-
-
