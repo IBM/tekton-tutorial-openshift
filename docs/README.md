@@ -35,7 +35,7 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"
 Tekton provides a set of extensions to Kubernetes, in the form of [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/), for defining pipelines.
 The following diagram shows the resources used in this tutorial.  The arrows depict references from one resource to another resource.
 
-![crd](doc/source/images/crd.png)
+![crd](images/crd.png)
 
 The resources are used as follows.
 
@@ -271,7 +271,7 @@ kubectl apply -f https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/kani
 
 The final function that the pipeline needs is a task that deploys a docker image to a Kubernetes cluster.
 Below is a Tekton task that does this.
-You can find this yaml file at [tekton/tasks/deploy-using-kubectl.yaml](tekton/tasks/deploy-using-kubectl.yaml).
+You can find this yaml file at [tekton/tasks/deploy-using-kubectl.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/tasks/deploy-using-kubectl.yaml).
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -333,7 +333,7 @@ kubectl apply -f tekton/tasks/deploy-using-kubectl.yaml
 ### 6. Create a pipeline
 
 Below is a Tekton pipeline that runs the tasks we defined above.
-You can find this yaml file at [tekton/pipeline/build-and-deploy-pipeline.yaml](tekton/pipeline/build-and-deploy-pipeline.yaml).
+You can find this yaml file at [tekton/pipeline/build-and-deploy-pipeline.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml).
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -458,7 +458,7 @@ kubectl annotate secret ibm-registry-secret tekton.dev/docker-0=$REGISTRY
 This secret will be used to both push and pull images from your registry.
 
 Now you can create the service account using the following yaml.
-You can find this yaml file at [tekton/pipeline-account.yaml](tekton/pipeline-account.yaml).
+You can find this yaml file at [tekton/pipeline-account.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline-account.yaml).
 
 ```yaml
 apiVersion: v1
@@ -527,7 +527,7 @@ We've defined reusable Pipeline and Task resources for building and deploying an
 It is now time to look at how one runs the pipeline.
 
 Below is a Tekton PipelineRun resource that runs the pipeline we defined above.
-You can find this yaml file at [tekton/run/picalc-pipeline-run.yaml](tekton/run/picalc-pipeline-run.yaml).
+You can find this yaml file at [tekton/run/picalc-pipeline-run.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/picalc-pipeline-pvc.yaml).
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -559,7 +559,7 @@ Although this file is small there is a lot going on here.  Let's break it down f
 
 * The Pipeline resource is identified under the `pipelineRef` key.
 
-* Parameters exposed by the pipeline are set to specific values such as the Git repository to clone, the image to build, and the yaml file to deploy. This example builds a [go program that calculates an approximation of pi](src/picalc.go). The source includes a [Dockerfile](src/Dockerfile) which runs tests, compiles the code, and builds an image for execution.
+* Parameters exposed by the pipeline are set to specific values such as the Git repository to clone, the image to build, and the yaml file to deploy. This example builds a [go program that calculates an approximation of pi](https://github.com/IBM/tekton-tutorial-openshift/blob/master/src/picalc.go). The source includes a [Dockerfile](src/Dockerfile) which runs tests, compiles the code, and builds an image for execution.
 
   > **NOTE** *You must edit* the `picalc-pipeline-run.yaml` file to substitute the values of `<REGISTRY>` with the information for your private container registry. To find the value for `<REGISTRY>`, enter the command `oc get routes -n openshift-image-registry`.
 
@@ -791,6 +791,4 @@ Click **Pipelines** to explore the pipline your created and explore the Pipeline
 
 ## Summary
 
-Tekton provides simple, easy-to-learn features for constructing CI/CD pipelines that run on Kubernetes.
-This tutorial covered the basics to get you started building your own pipelines.
-There are more features available and many more planned for upcoming releases.
+Tekton provides simple, easy-to-learn features for constructing CI/CD pipelines that run on Kubernetes. This tutorial covered the basics to get you started building your own pipelines. There are more features available and many more planned for upcoming releases.
