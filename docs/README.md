@@ -58,7 +58,6 @@ Check out the `beta-update` branch after cloning.
 ```bash
 git clone https://github.com/IBM/tekton-tutorial-openshift
 cd tekton-tutorial-openshift
-git checkout beta-update
 ```
 
 We will work from the bottom-up, i.e. first we will define the Task resources needed to build and deploy the image,
