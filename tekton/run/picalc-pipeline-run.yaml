@@ -7,7 +7,7 @@ spec:
     name: build-and-deploy-pipeline
   params:
     - name: gitUrl
-      value: https://github.com/odrodrig/tekton-tutorial.git
+      value: https://github.com/IBM/tekton-tutorial-openshift
     - name: gitRevision
       value: beta-update
     - name: pathToYamlFile
