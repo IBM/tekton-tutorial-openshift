@@ -5,7 +5,7 @@ site_author: IBM Developer
 
 # Repository
 repo_name: tekton-tutorial-openshift
-repo_url: https://github.com/ibm/tekton-tutorial-openshift
+repo_url: https://github.com/remkohdev/tekton-tutorial-openshift
 edit_uri: edit/master/docs
 
 # Navigation
