@@ -1,6 +1,6 @@
 # Project information
 site_name: Tekton 101 Workshop
-site_url: https://ibm.github.io/tekton-tutorial-openshift
+site_url: https://remkohdev.github.io/tekton-tutorial-openshift
 site_author: IBM Developer
 
 # Repository
@@ -24,14 +24,16 @@ theme:
     text: IBM Plex Sans
     code: IBM Plex Mono
   icon:
-    logo: material/library
+    logo: ibm_8bar_reverse_2
   features:
-    # - navigation.tabs
-    - navigation.instant
+    - navigation.tabs
+    #- navigation.instant
+    - navigation.expand
   palette:
     scheme: default
-    primary: blue
+    primary: black
     accent: blue
+  custom_dir: overrides
 
 # Plugins
 plugins:
