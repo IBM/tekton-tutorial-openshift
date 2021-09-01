@@ -6,6 +6,7 @@
 * An instance of IBM Cloud Container Registry (ICR),
 * Access to an OpenShift v4.7 cluster, this tutorial uses IBM Cloud Red Hat OpenShift Kubernetes Service (ROKS),
 * OpenShift Pipelines must be installed,
+* Connect to OpenShift,
 * Create a new project,
 * Clone the git repository for this tutorial, containing the Tekton resources,
 
@@ -31,6 +32,10 @@ Connect to your OpenShift cluster from the terminal, follow [these instructions]
 ## OpenShift Pipelines
 
 Before you start the tutorial you must have access to an OpenShift environment with OpenShift Pipelines using Tekton. To install OpenShift Pipelines, follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md).
+
+## Connect to OpenShift
+
+To connect to your OpenShift cluster, follow the instructions [here](https://ibm.github.io/workshop-setup/ROKS/).
 
 ## Create a New Project
 
