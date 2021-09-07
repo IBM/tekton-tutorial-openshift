@@ -16,6 +16,7 @@ nav:
     - Setup: lab1/0_setup.md
     - Clone Git Repo: lab1/1_clone-git-repo.md
     - Build and Push Image using Kaniko: lab1/2_build-and-push-image-using-kaniko.md
+    - Deploy an Image to OpenShift: 3_deploy-image-to-cluster.md
     - Create Pipeline: lab1/4_create-pipeline.md
     - Create ServiceAccount: lab1/5_create-service-account.md
     - Create PipelineRun: lab1/6_create-pipeline-run.md
