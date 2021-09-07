@@ -1,4 +1,4 @@
-# 2. Create a Task to Build and Upload Container Image to Registry using Kaniko
+# 2. Create a Task to Build and Upload Container Image using Kaniko
 
 The next task that the pipeline needs is a task that builds a docker image and pushes it to a container registry. The catalog provides a `kaniko` task which does this using Google's `kaniko` tool. The task is described [here](https://hub.tekton.dev/tekton/task/kaniko).
 
@@ -82,7 +82,7 @@ spec:
 
 You can see that this task needs a workspace as well.
 
-```yaml
+```yml
 workspaces:
   - name: source
 ```
@@ -91,7 +91,12 @@ This workspace has the source to be build. The pipeline will provide the same wo
 
 The `kaniko` task also uses a feature called `results`. A result is a value produced by a task which can then be used as a parameter value to other tasks. This task declares a result named `IMAGE-DIGEST` which it sets to the digest of the built image. A task sets a result by writing it to a file named `/tekton/results/name` where `name` refers to the name of the result, in this case `IMAGE-DIGEST`. We will see later how the pipeline uses this result.
 
-You may be wondering about how the task authenticates to the image repository for permission to push the image. This will be covered later.
+```yml
+results:
+  - name: IMAGE-DIGEST
+```
+
+We will cover how the task authenticates to the image repository for permission to push the image later.
 
 First, apply the file to your cluster and create the `kaniko` task in your namespace.
 
@@ -105,3 +110,6 @@ git-clone   48m
 kaniko      3m9s
 ```
 
+## Next
+
+Next, go to [Create a Task to Deploy an Image to OpenShift](3_deploy-image-to-cluster.md).

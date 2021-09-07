@@ -31,7 +31,15 @@ Connect to your OpenShift cluster from the terminal, follow [these instructions]
 
 ## OpenShift Pipelines
 
-Before you start the tutorial you must have access to an OpenShift environment with OpenShift Pipelines using Tekton. To install OpenShift Pipelines, follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md).
+Before you start the tutorial you must have access to an OpenShift environment with OpenShift Pipelines using Tekton. 
+
+```bash
+$ oc get operators
+NAME                                                  AGE
+openshift-pipelines-operator-rh.openshift-operators   12d
+```
+
+To install OpenShift Pipelines, follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md).
 
 ## Connect to OpenShift
 
@@ -62,4 +70,4 @@ cd tekton-tutorial-openshift
 
 ## Next
 
-Next, go to step 1 and create a task to [clone a git repository](1_clone-git-repo.md).
+Next, go to [Create a Task to Clone a Git Repository](1_clone-git-repo.md).

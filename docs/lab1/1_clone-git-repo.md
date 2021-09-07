@@ -175,3 +175,7 @@ $ oc get tasks
 NAME        AGE
 git-clone   3m9s
 ```
+
+## Next
+
+Next, go to [Create a Task to Build and Upload Container Image to Registry using Kaniko](2_build-and-push-image-using-kaniko.md).
