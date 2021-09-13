@@ -2,9 +2,7 @@
 
 Tekton is an open source project to configure and run CI/CD pipelines within a OpenShift/Kubernetes cluster.
 
-## Introduction
-
-Table of contents,
+## Overview
 
 | Module      | Description                          |
 | ----------- | ------------------------------------ |
@@ -15,6 +13,8 @@ Table of contents,
 | 4. Scan Images for Vulnerabilities using Sysdig | lab4 (coming soon)  |
 | 5. Scan Running Containers in OpenShift using Sysdig | lab5 (coming soon)  |
 | 6. Governance, Risk and Compliance (GRC) using Security and Compliance Center (SCC) | lab6 (coming soon)  |
+
+## Introduction
 
 In this learning path you will learn:
 
