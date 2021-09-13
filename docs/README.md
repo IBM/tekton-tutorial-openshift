@@ -4,6 +4,18 @@ Tekton is an open source project to configure and run CI/CD pipelines within a O
 
 ## Introduction
 
+Table of contents,
+
+| Module      | Description                          |
+| ----------- | ------------------------------------ |
+| 0. Setup | [setup](lab1/setup.md) |
+| 1. Create a Basic Pipeline using Tekton | [lab1](lab1/1_clone-git-repo.md) |
+| 2. Add SAST and SCA using Snyk | lab2 (coming soon) |
+| 3. Build, Sign and Push Images to a Private SonaType Nexus Repository | lab3 (coming soon)  |
+| 4. Scan Images for Vulnerabilities using Sysdig | lab4 (coming soon)  |
+| 5. Scan Running Containers in OpenShift using Sysdig | lab5 (coming soon)  |
+| 6. Governance, Risk and Compliance (GRC) using Security and Compliance Center (SCC) | lab6 (coming soon)  |
+
 In this learning path you will learn:
 
 * the basic concepts in Tekton pipelines,
@@ -17,16 +29,6 @@ In this learning path you will learn:
 * scan images for vulnerabilities,
 * scan running containers for vulnerabilities,
 * check compliance of your deployments against NIST 850-3 and SOC2 regulations,
-
-| Module      | Description                          |
-| ----------- | ------------------------------------ |
-| 0. Setup | [setup](lab1/setup.md) |
-| 1. Create a Basic Pipeline using Tekton | [lab1](lab1/1_clone-git-repo.md) |
-| 2. Add SAST and SCA using Snyk | lab2 (coming soon) |
-| 3. Build, Sign and Push Images to a Private SonaType Nexus Repository | lab3 (coming soon)  |
-| 4. Scan Images for Vulnerabilities using Sysdig | lab4 (coming soon)  |
-| 5. Scan Running Containers in OpenShift using Sysdig | lab5 (coming soon)  |
-| 6. Governance, Risk and Compliance (GRC) using Security and Compliance Center (SCC) | lab6 (coming soon)  |
 
 Also, check out this [very good tutorial](https://github.com/openshift/pipelines-tutorial) by Red Hat.
 
