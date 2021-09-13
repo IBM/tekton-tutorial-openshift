@@ -1,4 +1,4 @@
-# OpenShift Deployment using Tekton Pipelines
+# Secure OpenShift Deployment using Tekton Pipelines
 
 Tekton is an open source project to configure and run CI/CD pipelines within a OpenShift/Kubernetes cluster.
 
