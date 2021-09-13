@@ -32,6 +32,19 @@ In this learning path you will learn:
 
 Also, check out this [very good tutorial](https://github.com/openshift/pipelines-tutorial) by Red Hat.
 
+## Technologies
+
+This tutorial was tested using:
+
+* IBM Cloud Shell, image version 1.0.28
+* IBM Cloud CLI, version 2.0.3
+* Container Registry plugin, version 0.1.543
+* OpenShift, version 4.6
+* OpenShift CLI, client version 4.6.23
+* Tekton, client version 0.12.0
+  * task/git-clone/0.3
+  * task/kaniko/0.2
+
 ## Estimated time
 
 1 hour
@@ -79,6 +92,3 @@ In this workshop, you will learn more about each resource and create a simple pi
 We will first define the Task resources needed to build and deploy the image.
 Then we will define the Pipeline resource that references the tasks,
 and finally we will create the PipelineRun resource needed to run the pipeline.
-
-## Steps
-
