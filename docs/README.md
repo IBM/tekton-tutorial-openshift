@@ -6,7 +6,7 @@ Tekton is an open source project to configure and run CI/CD pipelines within a O
 
 | Module      | Description                          |
 | ----------- | ------------------------------------ |
-| 0. Setup | [setup](lab1/setup.md) |
+| 0. Setup | [setup](lab1/0_setup.md) |
 | 1. Create a Basic Pipeline using Tekton | [lab1](lab1/1_clone-git-repo.md) |
 | 2. Add SAST and SCA using Snyk | lab2 (coming soon) |
 | 3. Build, Sign and Push Images to a Private SonaType Nexus Repository | lab3 (coming soon)  |
