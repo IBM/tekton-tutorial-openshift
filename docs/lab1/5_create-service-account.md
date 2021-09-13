@@ -30,7 +30,7 @@ $ oc annotate secret ibm-cr-push-secret tekton.dev/docker-0=us.icr.io
 secret/ibm-cr-push-secret annotated
 
 $ EMAIL=remkohdev@us.ibm.com
-$ oc create secret docker-registry pull-secret --docker-server=$REGISTRY_ROUTE --docker-username=iamapikey --docker-password=$IBMCLOUD_APIKEY --docker-email=$EMAIL
+$ oc create secret docker-registry ibm-cr-pull-secret --docker-server=$REGISTRY_ROUTE --docker-username=iamapikey --docker-password=$IBMCLOUD_APIKEY --docker-email=$EMAIL
 ```
 
 Next, create a service account using the following yaml file at [tekton/pipeline-account.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline-account.yaml).
