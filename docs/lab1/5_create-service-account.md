@@ -1,40 +1,39 @@
 # 5. Define a Service Account
 
-Before running the pipeline, we need to set up a service account. A service account is associated with a username and can be granted roles to control access to protected resources. Our service account uses secrets containing credentials for authentication
-along with RBAC-related resources for permission to create and modify relevant Kubernetes resources.
+Before running the pipeline, we need to set up a service account. In OpenShift, a service account is associated with a username and can be granted roles to control access to protected resources. A service account can use secrets containing credentials for authentication along with RBAC-related resources for permission to create and modify relevant Kubernetes resources.
 
-First, we need to allow access to the private container registry. For this, we need to find the endpoint of the private container registry by running the `get routes` command, and assign this endpoint to an environment variable `REGISTRY_ROUTE`. Also, define an environment variable `EMAIL` and set the value to your IBM Id, i.e. the email address you used to signup for the IBM Cloud account. This email is used by IAM to authenticate your user in your Red Hat OpenShift Kubernetes Service (ROKS) cluster on IBM Cloud.
+## Set up IBM Cloud Container Registry (ICR) as a private registry on Red Hat OpenShift
 
-```bash
-export REGISTRY_ROUTE=$(oc get routes -n openshift-image-registry --output json | jq -r '.items[0].spec.host')
-echo $REGISTRY_ROUTE
+Red Hat OpenShift on IBM Cloud clusters are also set up by default with an internal registry that stores images locally in your cluster. You can use either the internal registry on OpenShift or the private IBM Cloud Container Registry (ICR), in combination or separately. For instance, you could create an ImageStream on your cluster, pull copies of images in ICR to the internal private registry, and in a deployment use the image from the internal private registry.
 
-export EMAIL=<your IBM ID>
-```
+In this workshop, we use only the private IBM Cloud Container Registry (ICR). To access ICR, you need to [set up access to IBM Cloud Container Registry (ICR) as a private registry on Red Hat OpenShift](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_rhos).
 
-Using `oc whoami` and `oc whoami -t` commands to set the values for the current user's username and password, create a generic secret `ibm-registry-secret`.
+Create a new IBM Cloud API Key or use an existing IBM Cloud API Key
 
 ```bash
-$ oc create secret generic ibm-registry-secret --type="kubernetes.io/basic-auth" --from-literal=username=$(oc whoami) --from-literal=password=$(oc whoami -t)
-secret/ibm-registry-secret created
+$ USERNAME=<your username>
 
-oc create secret docker-registry ibm-registry-secret-2 --docker-server=$REGISTRY_ROUTE --docker-username=$(oc whoami) --docker-password=$(oc whoami -t) --docker-email=$EMAIL
+$ ibmcloud iam api-key-create $USERNAME-tekton-apikey -d "apikey for tekton task in openshift" --file apikey-tekton.json
+Creating API key remkohdev-tekton-apikey under e65910fa61ce9072d64902d03f3d4774 as remkohdev@us.ibm.com...OK
+API key remkohdev-tekton-apikey was created
+Successfully save API key information to apikey-tekton.json
+
+$ IBMCLOUD_APIKEY=$(cat apikey-tekton.json | jq -r ".apikey")
+$ echo $IBMCLOUD_APIKEY
+
+$ oc create secret generic ibm-cr-push-secret --type="kubernetes.io/basic-auth" --from-literal=username=iamapikey --from-literal=password=$IBMCLOUD_APIKEY
+
+secret/ibm-cr-push-secret created
+
+$ oc annotate secret ibm-cr-push-secret tekton.dev/docker-0=us.icr.io
+
+secret/ibm-cr-push-secret annotated
+
+$ EMAIL=remkohdev@us.ibm.com
+$ oc create secret docker-registry pull-secret --docker-server=$REGISTRY_ROUTE --docker-username=iamapikey --docker-password=$IBMCLOUD_APIKEY --docker-email=$EMAIL
 ```
 
-A pipeline run can include different types of authentication. You must specify what secret to use for what URL. You must properly annotate the Secret to specify the domain for which Tekton can use it. Tekton ignores secrets that are not properly annotated. A `credential annotation key` must begin with `tekton.dev/git-` or `tekton.dev/docker-` and its value is the URL of the host for which you want Tekton to use that credential.
-
-Create the secret,
-
-```bash
-$ oc annotate secret ibm-registry-secret tekton.dev/docker-0=$REGISTRY_ROUTE
-secret/ibm-registry-secret annotated
-
-oc annotate secret ibm-registry-secret-2 tekton.dev/docker-0=$REGISTRY_ROUTE
-```
-
-In the example above, `tekton.dev/docker-0` specifies what URL the credentials in the secret should be used for. Tekton will use the secret to both push and pull images from your registry.
-
-Now you must create a service account using the following yaml. You can find this yaml file at [tekton/pipeline-account.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline-account.yaml).
+Next, create a service account using the following yaml file at [tekton/pipeline-account.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline-account.yaml).
 
 ```yaml
 apiVersion: v1
@@ -42,7 +41,7 @@ kind: ServiceAccount
 metadata:
   name: pipeline-account
 secrets:
-- name: ibm-registry-secret
+- name: ibm-cr-push-secret
 
 ---
 
@@ -85,11 +84,11 @@ subjects:
 
 This yaml creates the following Kubernetes resources:
 
-* A ServiceAccount named `pipeline-account`. The service account references the annotated `ibm-registry-secret` secret so that the pipeline can authenticate to your private container registry when it pushes and pulls a container image.
+* A ServiceAccount named `pipeline-account`. The service account references the annotated `ibm-cr-push-secret` secret so that the pipeline authenticates to your private container registry when it pushes and pulls a container image from the private ICR.
 
-* A Secret named `kube-api-secret` which contains a token (generated by Kubernetes) for accessing the Kubernetes API. This allows the pipeline to use `kubectl` or `oc` to talk to your cluster.
+* A Secret named `kube-api-secret` which contains a token (generated by Kubernetes) for accessing the Kubernetes API. This allows the pipeline to use `kubectl` or `oc` to talk to your cluster. In OpenShift, a controller loop ensures a Secret with an API token exists for ServiceAccounts. To create our own additional API token for our ServiceAccount, we need to create a Secret of type `kubernetes.io/service-account-token` with an annotation referencing the ServiceAccount. The controller will update it with a generated token.
 
-* A Role named `pipeline-role` which provides the resource-based access control permissions needed for this pipeline to create and modify Kubernetes resources, respectively services and deployments.
+* A Role named `pipeline-role` which provides the Resource-Based Access Control (RBAC) permissions needed for this pipeline to create and modify Kubernetes resources, respectively services and deployments.
 
 * And a RoleBinding named `pipeline-role-binding`, which binds the Role to your Service Account.
 
@@ -105,3 +104,6 @@ rolebinding.rbac.authorization.k8s.io/pipeline-role-binding created
 
 Our pipeline-account is now authorized to get, create, update and patch services and deployments.
 
+## Next
+
+Next, go to [Create a PipelineRun](6_create-pipeline-run.md).

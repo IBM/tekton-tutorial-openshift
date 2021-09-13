@@ -1,19 +1,19 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: picalc-pr-
+  generateName: tekton101lab-pr-
 spec:
   pipelineRef:
     name: build-and-deploy-pipeline
   params:
     - name: gitUrl
-      value: https://github.com/odrodrig/tekton-tutorial.git
+      value: https://github.com/IBM/tekton-tutorial-openshift.git
     - name: gitRevision
       value: beta-update
     - name: pathToYamlFile
       value: "kubernetes/picalc.yaml"
     - name: imageUrl
-      value: <REGISTRY>/default/picalc
+      value: <REGISTRY>/<NAMESPACE>/picalc
     - name: imageTag
       value: "1.0"
   serviceAccountName: pipeline-account

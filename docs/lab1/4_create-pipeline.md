@@ -1,6 +1,6 @@
 # 4. Create a Pipeline
 
-Now we created all the tasks we use, we can create a pipeline `build-and-deploy-pipeline` running all tasks. Below is a Tekton pipeline that runs the tasks we created above. You can find this yaml file at [https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml).
+Now we created all the tasks that we need , we need to create a pipeline definition `build-and-deploy-pipeline` that defines how to run our tasks. Below is a Tekton pipeline that runs the tasks we created above. You can find this yaml file at [https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml](https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml).
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -93,4 +93,12 @@ Apply the file to your cluster to create the pipeline in your namespace.
 ```bash
 $ oc apply -f tekton/pipeline/build-and-deploy-pipeline.yaml
 pipeline.tekton.dev/build-and-deploy-pipeline created
+
+$ oc get pipelines
+NAME                        AGE
+build-and-deploy-pipeline   17d
 ```
+
+## Next
+
+Next, go to [Define a Service Account](5_create-service-account.md).

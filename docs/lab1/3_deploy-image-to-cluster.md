@@ -66,3 +66,7 @@ deploy-using-kubectl   54s
 git-clone              3h3m
 kaniko                 138m
 ```
+
+## Next
+
+Next, go to [Create a Pipeline](4_create-pipeline.md).

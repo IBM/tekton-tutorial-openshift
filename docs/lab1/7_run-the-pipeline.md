@@ -1,19 +1,18 @@
 # 7. Run the Pipeline
 
-All the pieces are in place to execute the pipelinerun.
+All the pieces are in place to execute the pipelinerun by creating the PipelineRun resource in your cluster.
 
 ```bash
 $ oc create -f tekton/run/picalc-pipeline-run.yaml
 pipelinerun.tekton.dev/picalc-pr-c7hsb created
 ```
 
-Note that we're using `oc create` here instead of `oc apply`. As mentioned previously a given PipelineRun resource can run a pipeline only once so you need to create a new one each time you want to run the pipeline. `kubectl` or `oc` will respond with the generated name of the PipelineRun resource.
+Note that we're using `oc create` here instead of `oc apply`. As mentioned before, a given PipelineRun resource can run a pipeline only once, so you need to create a new PipelineRun each time you want to run the Pipeline. `kubectl` or `oc` will create the generated name of the PipelineRun resource.
 
 View the status of our pipeline run,
 
 ```bash
-oc get pipelinerun
-
+$ oc get pipelinerun
 NAME              SUCCEEDED   REASON    STARTTIME   COMPLETIONTIME
 picalc-pr-dqwqb   Unknown     Running   5s
 ```
@@ -21,8 +20,9 @@ picalc-pr-dqwqb   Unknown     Running   5s
 The pipeline will be successful when `SUCCEEDED` is `True`.
 
 ```bash
+$ oc get pipelinerun
 NAME              SUCCEEDED   REASON      STARTTIME   COMPLETIONTIME
-picalc-pr-dqwqb   True        Succeeded   7m26s       4m49s
+picalc-pr-x5qf9   True        Succeeded   2m58s       12s
 ```
 
 Check the status of the Kubernetes deployment.  It should be ready.
@@ -47,11 +47,13 @@ $ kubectl get svc picalc
 NAME     TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 picalc   NodePort   172.21.199.71   <none>        8080:30925/TCP   9m
 
-$ curl 150.238.236.26:30925?iterations=20000000
+$ EXTERNAL_IP=150.238.236.26
+$ NODE_PORT=30925
+$ curl $EXTERNAL_IP:$NODE_PORT?iterations=20000000
 3.1415926036
 ```
 
-#### Debugging a failed PipelineRun
+## Debugging a failed PipelineRun
 
 Let's take a look at what a PipelineRun failure would look like.
 Edit the PipelineRun yaml and change the gitUrl parameter to a non-existent Git repository to force a failure.
@@ -123,11 +125,11 @@ to run the pipeline tasks.
 
 OpenShift provides a nice UI for the pipelines and the applications deployed. From the OpenShift console, click **developer** in the upper left drop-down to get to the developer view. Then click **Topology** to view your running app.
 
-![OpenShift Topology](images/openshift-topology.png)
+![OpenShift Topology](../images/openshift-topology.png)
 
 Click **Pipelines** to explore the pipline your created and explore the PipelineRuns
 
-![OpenShift Pipelines](images/openshift-pipelines.png)
+![OpenShift Pipelines](../images/openshift-pipelines.png)
 
 ## Summary
 
