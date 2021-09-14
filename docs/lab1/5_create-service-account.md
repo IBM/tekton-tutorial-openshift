@@ -14,8 +14,8 @@ Create a new IBM Cloud API Key or use an existing IBM Cloud API Key
 $ USERNAME=<your username>
 
 $ ibmcloud iam api-key-create $USERNAME-tekton-apikey -d "apikey for tekton task in openshift" --file apikey-tekton.json
-Creating API key remkohdev-tekton-apikey under e65910fa61ce9072d64902d03f3d4774 as remkohdev@us.ibm.com...OK
-API key remkohdev-tekton-apikey was created
+Creating API key user1-tekton-apikey under e65910fa61ce9072d64902d03f3d4774 as user1@email.com...OK
+API key user1-tekton-apikey was created
 Successfully save API key information to apikey-tekton.json
 
 $ IBMCLOUD_APIKEY=$(cat apikey-tekton.json | jq -r ".apikey")
@@ -29,7 +29,7 @@ $ oc annotate secret ibm-cr-push-secret tekton.dev/docker-0=us.icr.io
 
 secret/ibm-cr-push-secret annotated
 
-$ EMAIL=remkohdev@us.ibm.com
+$ EMAIL=user1v@email.com
 $ oc create secret docker-registry ibm-cr-pull-secret --docker-server=$REGISTRY_ROUTE --docker-username=iamapikey --docker-password=$IBMCLOUD_APIKEY --docker-email=$EMAIL
 ```
 
