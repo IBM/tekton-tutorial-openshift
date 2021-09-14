@@ -72,7 +72,7 @@ The resources are used as follows.
 
 A Task executes a Pod and is a sequence of Steps. A Step is equivalent to a Container. You can define the name, image, environment and a script to run inside the container.  All Steps in a Task can access a shared workspace, an implicit volume of the pod.
 
-A Pipeline is a collection of Tasks that can run sequentially or conditionally. Pipeline has access to a shared persistent volume (workspace) and combines tasks through the workspace and results to certain output. The pipeline also provides a finalizer function. 
+A Pipeline is a collection of Tasks that can run sequentially or conditionally. Pipeline has access to a shared persistent volume (workspace) and combines tasks through the workspace and results to certain output. The pipeline also provides a finalizer function.
 
 Pipeline and Tasks are executed by PipelineRun and TaskRun. To automatically invoke these you can create a Trigger. A TriggerBinding extracts data from the event payload, and a TriggerTemplate creates the template for the PipelineRun. The EventListener is a Custom Resource Definition (CRD) that combines the TriggerBinding and the TriggerTemplate. You can find existing pipeline resources in the Tekton Catalog or Tekton Hub.
 

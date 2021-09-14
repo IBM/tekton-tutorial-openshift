@@ -73,7 +73,7 @@ default inside the task (if it's an optional parameter).
 
 For example, our pipeline `build-and-deploy-pipeline` defines a parameter `pathToContext` that defaults to `src`. If you run the pipeline you can pass a value for this parameter and override the default. In the `build-and-push-image` task of the pipeline, a `CONTEXT` parameter is defined, which corresponds to the `CONTEXT` parameter that is defined in the `kaniko` task. The value of this parameter in the kaniko task will be set to the value that our pipeline parameter `pathToContext` is set to.
 
-However, the parameter `DOCKERFILE` that is defined in our `kaniko` task and there defaults to `./Dockerfile `, is not exposed in the pipeline under the `build-and-push-image` task that references the `kaniko` task. So the pipeline is not overriding the value of the `DOCKERFILE` parameter, and thus it defaults to the value `./Dockerfile`.
+However, the parameter `DOCKERFILE` that is defined in our `kaniko` task and there defaults to `./Dockerfile`, is not exposed in the pipeline under the `build-and-push-image` task that references the `kaniko` task. So the pipeline is not overriding the value of the `DOCKERFILE` parameter, and thus it defaults to the value `./Dockerfile`.
 
 Our `build-and-deploy-pipeline` pipeline also shows how to take the result of one task and pass it to another task. You saw earlier that the `kaniko` task defines a result named `IMAGE-DIGEST` that holds the digest of the built image.
 
