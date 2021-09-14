@@ -86,7 +86,7 @@ NAME                                                  AGE
 openshift-pipelines-operator-rh.openshift-operators   12d
 ```
 
-To install OpenShift Pipelines, follow [this guide on installing OpenShift Pipelines](https://github.com/openshift/pipelines-tutorial/blob/master/install-operator.md).
+To install OpenShift Pipelines, follow [this guide on installing Red Hat OpenShift Pipelines](https://ibm.github.io/workshop-setup/PIPELINES/).
 
 ## Create a New Project
 
