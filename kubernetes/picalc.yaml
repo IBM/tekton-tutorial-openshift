@@ -20,7 +20,7 @@ spec:
         - name: http-server
           containerPort: 8080
       imagePullSecrets:
-      - name: pull-secret
+      - name: ibm-cr-pull-secret
       serviceAccountName: pipeline-account
 ---
 apiVersion: v1

@@ -44,7 +44,7 @@ spec:
           value: "."
         - name: deleteExisting
           value: "true"
-    - name: source-to-image
+    - name: build-and-push-image
       taskRef:
         name: kaniko
       runAfter:
@@ -71,4 +71,4 @@ spec:
         - name: imageTag
           value: $(params.imageTag)
         - name: imageDigest
-          value: $(tasks.source-to-image.results.IMAGE-DIGEST)
+          value: $(tasks.build-and-push-image.results.IMAGE-DIGEST)

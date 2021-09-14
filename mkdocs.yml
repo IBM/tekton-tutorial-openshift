@@ -5,17 +5,27 @@ site_author: IBM Developer
 
 # Repository
 repo_name: tekton-tutorial-openshift
-repo_url: https://github.com/ibm/tekton-tutorial-openshift
+repo_url: https://github.com/IBM/tekton-tutorial-openshift
 edit_uri: edit/master/docs
 
 # Navigation
 nav:
-  - Tekton Workshop: README.md
+  - Welcome:
+    - About the workshop: README.md
+  - <b>Lab1 Tekton 101</b>:
+    - Setup: lab1/0_setup.md
+    - Clone Git Repo: lab1/1_clone-git-repo.md
+    - Build and Push Image using Kaniko: lab1/2_build-and-push-image-using-kaniko.md
+    - Deploy an Image to OpenShift: lab1/3_deploy-image-to-cluster.md
+    - Create Pipeline: lab1/4_create-pipeline.md
+    - Create ServiceAccount: lab1/5_create-service-account.md
+    - Create PipelineRun: lab1/6_create-pipeline-run.md
+    - Run the Pipeline: lab1/7_run-the-pipeline.md
 
 ## DO NOT CHANGE BELOW THIS LINE
 
 # Copyright
-copyright: Copyright &copy; 2020 IBM Developer
+copyright: Copyright &copy; 2021 IBM Developer
 
 # Theme
 theme:
@@ -24,14 +34,16 @@ theme:
     text: IBM Plex Sans
     code: IBM Plex Mono
   icon:
-    logo: material/library
+    logo: ibm_8bar_reverse_2
   features:
-    # - navigation.tabs
-    - navigation.instant
+    - navigation.tabs
+    #- navigation.instant
+    - navigation.expand
   palette:
     scheme: default
-    primary: blue
+    primary: black
     accent: blue
+  custom_dir: overrides
 
 # Plugins
 plugins:
