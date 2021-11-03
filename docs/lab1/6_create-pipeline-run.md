@@ -48,6 +48,7 @@ This should set the `imageUrl` to `us.icr.io/tekton101lab/picalc`. Run the follo
 ```bash
 sed -i "s/<REGISTRY>/$REGISTRY_ROUTE/g" tekton/run/picalc-pipeline-run.yaml
 sed -i "s/<NAMESPACE>/$NAMESPACE/g" tekton/run/picalc-pipeline-run.yaml
+sed -i "s/<NAME>/$NAME/g" tekton/run/picalc-pipeline-run.yaml
 
 cat tekton/run/picalc-pipeline-run.yaml
 ```
