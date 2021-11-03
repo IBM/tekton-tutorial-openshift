@@ -110,8 +110,7 @@ Optional: You can also install OpenShift Pipelines through the OpenShift Console
 Create a new project or namespace, you can use the same name as for the container registry, though they are not related.
 
 ```bash
-$ NAMESPACE=tekton101lab
-$ oc new-project $NAMESPACE
+$ oc new-project tekton101lab
 
 Now using project "tekton101lab" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
 You can add applications to this project with the 'new-app' command. For example, try:
