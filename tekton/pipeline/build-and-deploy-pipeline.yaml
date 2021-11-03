@@ -60,6 +60,8 @@ spec:
     - name: deploy-to-cluster
       taskRef:
         name: deploy-using-kubectl
+      runAfter:
+        - build-and-push-image
       workspaces:
         - name: git-source
           workspace: git-source

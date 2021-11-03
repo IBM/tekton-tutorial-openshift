@@ -61,9 +61,20 @@ $ ibmcloud cr namespace-list
 Listing namespaces for account 'IBM Client Developer Advocacy' in registry 'us.icr.io'...
 ...
 
-$ REGISTRY_ROUTE=us.icr.io
-$ NAMESPACE=tekton101lab
-$ ibmcloud cr namespace-add $NAMESPACE
+REGISTRY_ROUTE=us.icr.io
+NAMESPACE=advowork
+```
+
+Since everybody in the lab will be pushing to the same namespace in the registry, we need a way to differentiate each other's images. We can do this by adding your name to the image tag. In the following command, substitute `<name>` with your first name.
+
+```sh
+NAME=<name>
+```
+
+For example,
+
+```sh
+$ NAME=oliver
 ```
 
 ## IBM Cloud Red Hat OpenShift Kubernetes Service (ROKS)
@@ -86,15 +97,20 @@ NAME                                                  AGE
 openshift-pipelines-operator-rh.openshift-operators   12d
 ```
 
-To install OpenShift Pipelines, follow [this guide on installing Red Hat OpenShift Pipelines](https://ibm.github.io/workshop-setup/PIPELINES/).
+To install OpenShift Pipelines, run the following command:
+
+```sh
+oc apply -f src/pipelinesOperatorSubscription.yaml
+```
+
+Optional: You can also install OpenShift Pipelines through the OpenShift Console by following [this guide on installing Red Hat OpenShift Pipelines](https://ibm.github.io/workshop-setup/PIPELINES/).
 
 ## Create a New Project
 
 Create a new project or namespace, you can use the same name as for the container registry, though they are not related.
 
 ```bash
-$ NAMESPACE=tekton101lab
-$ oc new-project $NAMESPACE
+$ oc new-project tekton101lab
 
 Now using project "tekton101lab" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
 You can add applications to this project with the 'new-app' command. For example, try:
