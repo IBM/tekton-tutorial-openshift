@@ -1,0 +1,1411 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="IBM Developer">
+      
+      
+        <link rel="canonical" href="https://ibm.github.io/tekton-tutorial-openshift/lab1/allTogether/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Setup - Tekton 101 Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,400i,700%7CIBM+Plex+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"IBM Plex Sans";--md-code-font-family:"IBM Plex Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Tekton 101 Workshop" class="md-header__button md-logo" aria-label="Tekton 101 Workshop" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="180" height="85" version="1.1" viewBox="0 0 180 85"><title>ibm_8bar_gray10_on_teal90</title><g id="Page-1" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g id="ibm_8bar_gray10_on_teal90" fill-rule="nonzero"><rect id="Rectangle-5-Copy-14" width="180" height="85" x="0" y="0" fill="#000"/><g id="8-bar-/-reverse" fill="#F3F3F3" transform="translate(8.500000, 9.500000)"><path id="Combined-Shape" d="M31.6944444,60.7545455 L31.6944444,64.8707071 L1.70388148e-11,64.8707071 L1.70388148e-11,60.7545455 L31.6944444,60.7545455 Z M80.7590909,60.7545455 C77.7542929,63.3065657 73.8439394,64.8707071 69.5631313,64.8707071 L69.5631313,64.8707071 L36.2222222,64.8707071 L36.2222222,60.7545455 L80.7590909,60.7545455 Z M113.194444,60.7133838 L113.194444,64.8295455 L90.5555556,64.8295455 L90.5555556,60.7133838 L113.194444,60.7133838 Z M163,60.7133838 L163,64.8295455 L140.361111,64.8295455 L140.361111,60.7133838 L163,60.7133838 Z M128.218434,60.7133838 L126.777778,64.7883838 L125.337121,60.7133838 L128.218434,60.7133838 Z M86.2747475,52.1106061 C85.8631313,53.5512626 85.2868687,54.9507576 84.5459596,56.2267677 L84.5459596,56.2267677 L36.2222222,56.2267677 L36.2222222,52.1106061 L86.2747475,52.1106061 Z M31.6944444,52.1106061 L31.6944444,56.2267677 L1.70388148e-11,56.2267677 L1.70388148e-11,52.1106061 L31.6944444,52.1106061 Z M113.194444,52.0694444 L113.194444,56.1856061 L90.5555556,56.1856061 L90.5555556,52.0694444 L113.194444,52.0694444 Z M163,52.0694444 L163,56.1856061 L140.361111,56.1856061 L140.361111,52.0694444 L163,52.0694444 Z M131.264394,52.0694444 L129.823737,56.1856061 L123.731818,56.1856061 L122.291162,52.0694444 L131.264394,52.0694444 Z M22.6388889,43.4666667 L22.6388889,47.5828283 L9.05555556,47.5828283 L9.05555556,43.4666667 L22.6388889,43.4666667 Z M58.8611111,43.4666667 L58.8611111,47.5828283 L45.2777778,47.5828283 L45.2777778,43.4666667 L58.8611111,43.4666667 Z M86.3570707,43.4666667 C86.6863636,44.7838384 86.8510101,46.1833333 86.8510101,47.5828283 L86.8510101,47.5828283 L72.4444444,47.5828283 L72.4444444,43.4666667 L86.3570707,43.4666667 Z M113.194444,43.4255051 L113.194444,47.5416667 L99.6111111,47.5416667 L99.6111111,43.4255051 L113.194444,43.4255051 Z M153.944444,43.4255051 L153.944444,47.5416667 L140.361111,47.5416667 L140.361111,43.4255051 L153.944444,43.4255051 Z M134.310354,43.4255051 L132.869697,47.5416667 L120.685859,47.5416667 L119.245202,43.4255051 L134.310354,43.4255051 Z M22.6388889,34.8227273 L22.6388889,38.9388889 L9.05555556,38.9388889 L9.05555556,34.8227273 L22.6388889,34.8227273 Z M81.2118687,34.8227273 C82.5290404,35.9752525 83.640404,37.3747475 84.5459596,38.9388889 L84.5459596,38.9388889 L45.2777778,38.9388889 L45.2777778,34.8227273 L81.2118687,34.8227273 Z M113.194444,34.7815657 L113.194444,38.8977273 L99.6111111,38.8977273 L99.6111111,34.7815657 L113.194444,34.7815657 Z M153.944444,34.7815657 L153.944444,38.8977273 L140.361111,38.8977273 L140.361111,34.7815657 L153.944444,34.7815657 Z M137.397475,34.7815657 L135.915657,38.8977273 L117.639899,38.8977273 L116.158081,34.7815657 L137.397475,34.7815657 Z M22.6388889,26.1787879 L22.6388889,30.2949495 L9.05555556,30.2949495 L9.05555556,26.1787879 L22.6388889,26.1787879 Z M84.5459596,26.1787879 C83.640404,27.7017677 82.5290404,29.1012626 81.2118687,30.2949495 L81.2118687,30.2949495 L45.2777778,30.2949495 L45.2777778,26.1787879 L84.5459596,26.1787879 Z M153.944444,26.1376263 L153.944444,30.2537879 L140.361111,30.2537879 L140.361111,26.3434343 L138.961616,30.2537879 L127.065909,30.2537879 L128.465404,26.1376263 L153.944444,26.1376263 Z M125.090152,26.1376263 L126.489646,30.2537879 L114.593939,30.2537879 L113.194444,26.3434343 L113.194444,30.2537879 L99.6111111,30.2537879 L99.6111111,26.1376263 L125.090152,26.1376263 Z M22.6388889,17.5348485 L22.6388889,21.6510101 L9.05555556,21.6510101 L9.05555556,17.5348485 L22.6388889,17.5348485 Z M58.8611111,17.5348485 L58.8611111,21.6510101 L45.2777778,21.6510101 L45.2777778,17.5348485 L58.8611111,17.5348485 Z M86.8510101,17.5348485 C86.8510101,18.9343434 86.6863636,20.3338384 86.3570707,21.6510101 L86.3570707,21.6510101 L72.4444444,21.6510101 L72.4444444,17.5348485 L86.8510101,17.5348485 Z M153.944444,17.4936869 L153.944444,21.6098485 L130.070707,21.6098485 L131.470202,17.4936869 L153.944444,17.4936869 Z M122.085354,17.4936869 L123.484848,21.6098485 L99.6111111,21.6098485 L99.6111111,17.4936869 L122.085354,17.4936869 Z M31.6944444,8.89090909 L31.6944444,13.0070707 L1.70388148e-11,13.0070707 L1.70388148e-11,8.89090909 L31.6944444,8.89090909 Z M84.504798,8.89090909 C85.2457071,10.1669192 85.8219697,11.5664141 86.2335859,13.0070707 L86.2335859,13.0070707 L36.2222222,13.0070707 L36.2222222,8.89090909 L84.504798,8.89090909 Z M163,8.84974747 L163,12.9659091 L133.034343,12.9659091 L134.475,8.84974747 L163,8.84974747 Z M119.080556,8.84974747 L120.521212,12.9659091 L90.5555556,12.9659091 L90.5555556,8.84974747 L119.080556,8.84974747 Z M31.6944444,0.246969697 L31.6944444,4.36313131 L1.70388148e-11,4.36313131 L1.70388148e-11,0.246969697 L31.6944444,0.246969697 Z M69.5631313,0.246969697 L70.0046301,0.252525646 C74.1125422,0.356016166 77.8579067,1.89911181 80.7590909,4.36313131 L80.7590909,4.36313131 L36.2222222,4.36313131 L36.2222222,0.246969697 L69.5631313,0.246969697 Z M163,0.205808081 L163,4.3219697 L136.039141,4.3219697 L137.479798,0.205808081 L163,0.205808081 Z M116.075758,0.205808081 L117.516414,4.3219697 L90.5555556,4.3219697 L90.5555556,0.205808081 L116.075758,0.205808081 Z"/></g></g></g></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tekton 101 Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/IBM/tekton-tutorial-openshift/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tekton-tutorial-openshift
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        Welcome
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../0_setup/" class="md-tabs__link">
+        <b>Lab1 Tekton 101</b>
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Tekton 101 Workshop" class="md-nav__button md-logo" aria-label="Tekton 101 Workshop" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="180" height="85" version="1.1" viewBox="0 0 180 85"><title>ibm_8bar_gray10_on_teal90</title><g id="Page-1" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1"><g id="ibm_8bar_gray10_on_teal90" fill-rule="nonzero"><rect id="Rectangle-5-Copy-14" width="180" height="85" x="0" y="0" fill="#000"/><g id="8-bar-/-reverse" fill="#F3F3F3" transform="translate(8.500000, 9.500000)"><path id="Combined-Shape" d="M31.6944444,60.7545455 L31.6944444,64.8707071 L1.70388148e-11,64.8707071 L1.70388148e-11,60.7545455 L31.6944444,60.7545455 Z M80.7590909,60.7545455 C77.7542929,63.3065657 73.8439394,64.8707071 69.5631313,64.8707071 L69.5631313,64.8707071 L36.2222222,64.8707071 L36.2222222,60.7545455 L80.7590909,60.7545455 Z M113.194444,60.7133838 L113.194444,64.8295455 L90.5555556,64.8295455 L90.5555556,60.7133838 L113.194444,60.7133838 Z M163,60.7133838 L163,64.8295455 L140.361111,64.8295455 L140.361111,60.7133838 L163,60.7133838 Z M128.218434,60.7133838 L126.777778,64.7883838 L125.337121,60.7133838 L128.218434,60.7133838 Z M86.2747475,52.1106061 C85.8631313,53.5512626 85.2868687,54.9507576 84.5459596,56.2267677 L84.5459596,56.2267677 L36.2222222,56.2267677 L36.2222222,52.1106061 L86.2747475,52.1106061 Z M31.6944444,52.1106061 L31.6944444,56.2267677 L1.70388148e-11,56.2267677 L1.70388148e-11,52.1106061 L31.6944444,52.1106061 Z M113.194444,52.0694444 L113.194444,56.1856061 L90.5555556,56.1856061 L90.5555556,52.0694444 L113.194444,52.0694444 Z M163,52.0694444 L163,56.1856061 L140.361111,56.1856061 L140.361111,52.0694444 L163,52.0694444 Z M131.264394,52.0694444 L129.823737,56.1856061 L123.731818,56.1856061 L122.291162,52.0694444 L131.264394,52.0694444 Z M22.6388889,43.4666667 L22.6388889,47.5828283 L9.05555556,47.5828283 L9.05555556,43.4666667 L22.6388889,43.4666667 Z M58.8611111,43.4666667 L58.8611111,47.5828283 L45.2777778,47.5828283 L45.2777778,43.4666667 L58.8611111,43.4666667 Z M86.3570707,43.4666667 C86.6863636,44.7838384 86.8510101,46.1833333 86.8510101,47.5828283 L86.8510101,47.5828283 L72.4444444,47.5828283 L72.4444444,43.4666667 L86.3570707,43.4666667 Z M113.194444,43.4255051 L113.194444,47.5416667 L99.6111111,47.5416667 L99.6111111,43.4255051 L113.194444,43.4255051 Z M153.944444,43.4255051 L153.944444,47.5416667 L140.361111,47.5416667 L140.361111,43.4255051 L153.944444,43.4255051 Z M134.310354,43.4255051 L132.869697,47.5416667 L120.685859,47.5416667 L119.245202,43.4255051 L134.310354,43.4255051 Z M22.6388889,34.8227273 L22.6388889,38.9388889 L9.05555556,38.9388889 L9.05555556,34.8227273 L22.6388889,34.8227273 Z M81.2118687,34.8227273 C82.5290404,35.9752525 83.640404,37.3747475 84.5459596,38.9388889 L84.5459596,38.9388889 L45.2777778,38.9388889 L45.2777778,34.8227273 L81.2118687,34.8227273 Z M113.194444,34.7815657 L113.194444,38.8977273 L99.6111111,38.8977273 L99.6111111,34.7815657 L113.194444,34.7815657 Z M153.944444,34.7815657 L153.944444,38.8977273 L140.361111,38.8977273 L140.361111,34.7815657 L153.944444,34.7815657 Z M137.397475,34.7815657 L135.915657,38.8977273 L117.639899,38.8977273 L116.158081,34.7815657 L137.397475,34.7815657 Z M22.6388889,26.1787879 L22.6388889,30.2949495 L9.05555556,30.2949495 L9.05555556,26.1787879 L22.6388889,26.1787879 Z M84.5459596,26.1787879 C83.640404,27.7017677 82.5290404,29.1012626 81.2118687,30.2949495 L81.2118687,30.2949495 L45.2777778,30.2949495 L45.2777778,26.1787879 L84.5459596,26.1787879 Z M153.944444,26.1376263 L153.944444,30.2537879 L140.361111,30.2537879 L140.361111,26.3434343 L138.961616,30.2537879 L127.065909,30.2537879 L128.465404,26.1376263 L153.944444,26.1376263 Z M125.090152,26.1376263 L126.489646,30.2537879 L114.593939,30.2537879 L113.194444,26.3434343 L113.194444,30.2537879 L99.6111111,30.2537879 L99.6111111,26.1376263 L125.090152,26.1376263 Z M22.6388889,17.5348485 L22.6388889,21.6510101 L9.05555556,21.6510101 L9.05555556,17.5348485 L22.6388889,17.5348485 Z M58.8611111,17.5348485 L58.8611111,21.6510101 L45.2777778,21.6510101 L45.2777778,17.5348485 L58.8611111,17.5348485 Z M86.8510101,17.5348485 C86.8510101,18.9343434 86.6863636,20.3338384 86.3570707,21.6510101 L86.3570707,21.6510101 L72.4444444,21.6510101 L72.4444444,17.5348485 L86.8510101,17.5348485 Z M153.944444,17.4936869 L153.944444,21.6098485 L130.070707,21.6098485 L131.470202,17.4936869 L153.944444,17.4936869 Z M122.085354,17.4936869 L123.484848,21.6098485 L99.6111111,21.6098485 L99.6111111,17.4936869 L122.085354,17.4936869 Z M31.6944444,8.89090909 L31.6944444,13.0070707 L1.70388148e-11,13.0070707 L1.70388148e-11,8.89090909 L31.6944444,8.89090909 Z M84.504798,8.89090909 C85.2457071,10.1669192 85.8219697,11.5664141 86.2335859,13.0070707 L86.2335859,13.0070707 L36.2222222,13.0070707 L36.2222222,8.89090909 L84.504798,8.89090909 Z M163,8.84974747 L163,12.9659091 L133.034343,12.9659091 L134.475,8.84974747 L163,8.84974747 Z M119.080556,8.84974747 L120.521212,12.9659091 L90.5555556,12.9659091 L90.5555556,8.84974747 L119.080556,8.84974747 Z M31.6944444,0.246969697 L31.6944444,4.36313131 L1.70388148e-11,4.36313131 L1.70388148e-11,0.246969697 L31.6944444,0.246969697 Z M69.5631313,0.246969697 L70.0046301,0.252525646 C74.1125422,0.356016166 77.8579067,1.89911181 80.7590909,4.36313131 L80.7590909,4.36313131 L36.2222222,4.36313131 L36.2222222,0.246969697 L69.5631313,0.246969697 Z M163,0.205808081 L163,4.3219697 L136.039141,4.3219697 L137.479798,0.205808081 L163,0.205808081 Z M116.075758,0.205808081 L117.516414,4.3219697 L90.5555556,4.3219697 L90.5555556,0.205808081 L116.075758,0.205808081 Z"/></g></g></g></svg>
+
+    </a>
+    Tekton 101 Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/IBM/tekton-tutorial-openshift/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tekton-tutorial-openshift
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" data-md-state="indeterminate" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Welcome
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Welcome" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Welcome
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        About the workshop
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          <b>Lab1 Tekton 101</b>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="<b>Lab1 Tekton 101</b>" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          <b>Lab1 Tekton 101</b>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0_setup/" class="md-nav__link">
+        Setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_clone-git-repo/" class="md-nav__link">
+        Clone Git Repo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_build-and-push-image-using-kaniko/" class="md-nav__link">
+        Build and Push Image using Kaniko
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_deploy-image-to-cluster/" class="md-nav__link">
+        Deploy an Image to OpenShift
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_create-pipeline/" class="md-nav__link">
+        Create Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_create-service-account/" class="md-nav__link">
+        Create ServiceAccount
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_create-pipeline-run/" class="md-nav__link">
+        Create PipelineRun
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_run-the-pipeline/" class="md-nav__link">
+        Run the Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ibm-cloud-account" class="md-nav__link">
+    IBM Cloud Account
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ibm-cloud-shell" class="md-nav__link">
+    IBM Cloud Shell
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target-a-region" class="md-nav__link">
+    Target a Region
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-repository-containing-tekton-resources" class="md-nav__link">
+    Git repository containing Tekton resources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ibm-cloud-container-registry-icr" class="md-nav__link">
+    IBM Cloud Container Registry (ICR)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ibm-cloud-red-hat-openshift-kubernetes-service-roks" class="md-nav__link">
+    IBM Cloud Red Hat OpenShift Kubernetes Service (ROKS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openshift-pipelines" class="md-nav__link">
+    OpenShift Pipelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-new-project" class="md-nav__link">
+    Create a New Project
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/IBM/tekton-tutorial-openshift/edit/master/docs/lab1/allTogether.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>IBM Cloud Account,</li>
+<li>Access to IBM Cloud shell,</li>
+<li>Target a Region,</li>
+<li>Git repository containing Tekton resources,</li>
+<li>IBM Cloud Container Registry (ICR),</li>
+<li>Access to an OpenShift v4.7 cluster, this tutorial uses IBM Cloud Red Hat OpenShift Kubernetes Service (ROKS),</li>
+<li>OpenShift Pipelines must be installed,</li>
+<li>Create a New Project,</li>
+</ul>
+<h2 id="ibm-cloud-account">IBM Cloud Account<a class="headerlink" href="#ibm-cloud-account" title="Permanent link">&para;</a></h2>
+<p>Access your IBM Cloud account. Open a browser and go to <a href="https://cloud.ibm.com">https://cloud.ibm.com</a>. If you need to create a new IBM Cloud account, go <a href="https://ibm.github.io/workshop-setup/NEWACCOUNT/">here</a>.</p>
+<h2 id="ibm-cloud-shell">IBM Cloud Shell<a class="headerlink" href="#ibm-cloud-shell" title="Permanent link">&para;</a></h2>
+<p>In your IBM Cloud account, open a new instance of <a href="https://cloud.ibm.com/shell">IBM Cloud Shell</a>.</p>
+<h2 id="target-a-region">Target a Region<a class="headerlink" href="#target-a-region" title="Permanent link">&para;</a></h2>
+<p>Target the same region as your OpenShift cluster. In this tutorial, I am using a cluster in the region <code>us-south</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">REGION</span><span class="o">=</span>us-south
+ibmcloud target -r <span class="nv">$REGION</span>
+</code></pre></div>
+<h2 id="git-repository-containing-tekton-resources">Git repository containing Tekton resources<a class="headerlink" href="#git-repository-containing-tekton-resources" title="Permanent link">&para;</a></h2>
+<p>Clone the source code for this workshop to your client terminal in order to edit some of the yaml files before applying them to your cluster. Change into the directory containing the resources.</p>
+<div class="highlight"><pre><span></span><code>git clone https://github.com/IBM/tekton-tutorial-openshift
+<span class="nb">cd</span> tekton-tutorial-openshift
+</code></pre></div>
+<h2 id="ibm-cloud-container-registry-icr">IBM Cloud Container Registry (ICR)<a class="headerlink" href="#ibm-cloud-container-registry-icr" title="Permanent link">&para;</a></h2>
+<p>Your IBM Cloud account includes a registry called <a href="https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview">IBM Cloud Container Registry (ICR)</a>, a multi-tenant, highly available, scalable, and encrypted private image registry. You can access your registry at <a href="https://cloud.ibm.com/registry/overview">https://cloud.ibm.com/registry/overview</a>.</p>
+<p>The IBM Cloud Shell already has a Container Registry CLI plugin installed. Set the region and confirm the region is set for the registry on your account.</p>
+<div class="highlight"><pre><span></span><code>$ ibmcloud cr 
+$ ibmcloud cr region-set <span class="nv">$REGION</span>
+The region is <span class="nb">set</span> to <span class="s1">&#39;us-south&#39;</span>, the registry is <span class="s1">&#39;us.icr.io&#39;</span>.
+OK
+
+$ ibmcloud cr api                         
+Registry API endpoint   https://us.icr.io/api   
+OK
+</code></pre></div>
+<p>Create environment variables for the registry route and a namespace in your registry. Both variables will be used in the rest of the workshop. Create the registry namespace.</p>
+<div class="highlight"><pre><span></span><code>$ ibmcloud cr namespace-list
+Listing namespaces <span class="k">for</span> account <span class="s1">&#39;IBM Client Developer Advocacy&#39;</span> <span class="k">in</span> registry <span class="s1">&#39;us.icr.io&#39;</span>...
+...
+
+<span class="nv">REGISTRY_ROUTE</span><span class="o">=</span>us.icr.io
+<span class="nv">NAMESPACE</span><span class="o">=</span>advowork
+</code></pre></div>
+<p>Since everybody in the lab will be pushing to the same namespace in the registry, we need a way to differentiate each other's images. We can do this by adding your name to the image tag. In the following command, substitute <code>&lt;name&gt;</code> with your first name.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">NAME</span><span class="o">=</span>&lt;name&gt;
+</code></pre></div>
+<p>For example,</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">NAME</span><span class="o">=</span>oliver
+</code></pre></div>
+<h2 id="ibm-cloud-red-hat-openshift-kubernetes-service-roks">IBM Cloud Red Hat OpenShift Kubernetes Service (ROKS)<a class="headerlink" href="#ibm-cloud-red-hat-openshift-kubernetes-service-roks" title="Permanent link">&para;</a></h2>
+<p>Connect to your OpenShift cluster from the terminal using the login command from the OpenShift console, which should look similar to the following command,</p>
+<div class="highlight"><pre><span></span><code>oc login --token<span class="o">=</span>sha256~ZBMKw9VAayhdnyANaHvjJeXDiGwA7Fsr5gtLKj3-ehE --server<span class="o">=</span>https://d107-f.us-south.containers.cloud.ibm.com:30271
+</code></pre></div>
+<p>If you need to retrieve the login command, follow <a href="https://ibm.github.io/workshop-setup/ROKS/">these instructions</a>.</p>
+<h2 id="openshift-pipelines">OpenShift Pipelines<a class="headerlink" href="#openshift-pipelines" title="Permanent link">&para;</a></h2>
+<p>Before you start the tutorial you must have access to an OpenShift environment with OpenShift Pipelines using Tekton.</p>
+<div class="highlight"><pre><span></span><code>$ oc get operators
+NAME                                                  AGE
+openshift-pipelines-operator-rh.openshift-operators   12d
+</code></pre></div>
+<p>To install OpenShift Pipelines, run the following command:</p>
+<div class="highlight"><pre><span></span><code>oc apply -f src/pipelinesOperatorSubscription.yaml
+</code></pre></div>
+<p>Optional: You can also install OpenShift Pipelines through the OpenShift Console by following <a href="https://ibm.github.io/workshop-setup/PIPELINES/">this guide on installing Red Hat OpenShift Pipelines</a>.</p>
+<h2 id="create-a-new-project">Create a New Project<a class="headerlink" href="#create-a-new-project" title="Permanent link">&para;</a></h2>
+<p>Create a new project or namespace, you can use the same name as for the container registry, though they are not related.</p>
+<div class="highlight"><pre><span></span><code>$ oc new-project tekton101lab
+
+Now using project <span class="s2">&quot;tekton101lab&quot;</span> on server <span class="s2">&quot;https://d107-f.us-south.containers.cloud.ibm.com:30271&quot;</span>.
+You can add applications to this project with the <span class="s1">&#39;new-app&#39;</span> command. For example, try:
+    oc new-app rails-postgresql-example
+to build a new example application <span class="k">in</span> Ruby. Or use kubectl to deploy a simple Kubernetes application:
+    kubectl create deployment hello-node --image<span class="o">=</span>k8s.gcr.io/serve_hostname
+</code></pre></div>
+<p>Or change the current project to <code>tekton101lab</code>,</p>
+<div class="highlight"><pre><span></span><code>oc project tekton101lab
+</code></pre></div>
+<h1 id="1-create-a-task-to-clone-the-git-repository">1. Create a Task to Clone the Git Repository<a class="headerlink" href="#1-create-a-task-to-clone-the-git-repository" title="Permanent link">&para;</a></h1>
+<p>The first thing that the pipeline needs is a task to clone the Git repository with the source code for the image that the pipeline is building. This is such a common function that you don't need to write this task yourself. Tekton provides a library of reusable tasks called the <a href="https://hub.tekton.dev">Tekton Hub</a>.
+The library provides a <code>git-clone</code> task which is described <a href="https://hub.tekton.dev/tekton/task/git-clone">here</a>.</p>
+<p>The <code>git-clone</code> task is reproduced partially below.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tekton.dev/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Task</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-clone</span>
+  <span class="nt">labels</span><span class="p">:</span>
+    <span class="nt">app.kubernetes.io/version</span><span class="p">:</span> <span class="s">&quot;0.4&quot;</span>
+  <span class="nt">annotations</span><span class="p">:</span>
+    <span class="nt">tekton.dev/pipelines.minVersion</span><span class="p">:</span> <span class="s">&quot;0.21.0&quot;</span>
+    <span class="nt">tekton.dev/categories</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Git</span>
+    <span class="nt">tekton.dev/tags</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git</span>
+    <span class="nt">tekton.dev/displayName</span><span class="p">:</span> <span class="s">&quot;git</span><span class="nv"> </span><span class="s">clone&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="p p-Indicator">&gt;-</span>
+    <span class="no">These Tasks are Git tasks to work with repositories used by other tasks</span>
+    <span class="no">in your Pipeline.</span>
+  <span class="nt">workspaces</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">output</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The git repo will be cloned onto the volume backing this Workspace.</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ssh-directory</span>
+      <span class="nt">optional</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">A .ssh directory with private key, known_hosts, config, etc.</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">basic-auth</span>
+      <span class="nt">optional</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">A Workspace containing a .gitconfig and .git-credentials file.</span>
+  <span class="nt">params</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">url</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Repository URL to clone from.</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">revision</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Revision to checkout. (branch, tag, sha, ref, etc...)</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">submodules</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Initialize and fetch git submodules.</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">depth</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Perform a shallow clone, fetching only the most recent N commits.</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sslVerify</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Set the `http.sslVerify` global git config. Setting this to `false` is not advised unless you are sure that you trust your git remote.</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdirectory</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Subdirectory inside the `output` Workspace to clone the repo into.</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deleteExisting</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Clean out the contents of the destination directory if it already exists before cloning.</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
+  <span class="nt">results</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">commit</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The precise commit SHA that was fetched by this Task.</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">url</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The precise URL that was fetched by this Task.</span>
+  <span class="nt">steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">clone</span>
+      <span class="nt">image</span><span class="p">:</span> <span class="s">&quot;$(params.gitInitImage)&quot;</span>
+      <span class="nt">env</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HOME</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;$(params.userHome)&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_URL</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.url)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_REVISION</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.revision)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_SUBMODULES</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.submodules)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_DEPTH</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.depth)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_SSL_VERIFY</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.sslVerify)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_SUBDIRECTORY</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.subdirectory)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PARAM_DELETE_EXISTING</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.deleteExisting)</span>
+      <span class="nt">script</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">#!/usr/bin/env sh</span>
+        <span class="no">set -eu</span>
+
+        <span class="no">if [ &quot;${PARAM_VERBOSE}&quot; = &quot;true&quot; ] ; then</span>
+          <span class="no">set -x</span>
+        <span class="no">fi</span>
+
+        <span class="no">if [ &quot;${WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND}&quot; = &quot;true&quot; ] ; then</span>
+          <span class="no">cp &quot;${WORKSPACE_BASIC_AUTH_DIRECTORY_PATH}/.git-credentials&quot; &quot;${PARAM_USER_HOME}/.git-credentials&quot;</span>
+          <span class="no">cp &quot;${WORKSPACE_BASIC_AUTH_DIRECTORY_PATH}/.gitconfig&quot; &quot;${PARAM_USER_HOME}/.gitconfig&quot;</span>
+          <span class="no">chmod 400 &quot;${PARAM_USER_HOME}/.git-credentials&quot;</span>
+          <span class="no">chmod 400 &quot;${PARAM_USER_HOME}/.gitconfig&quot;</span>
+        <span class="no">fi</span>
+
+        <span class="no">if [ &quot;${WORKSPACE_SSH_DIRECTORY_BOUND}&quot; = &quot;true&quot; ] ; then</span>
+          <span class="no">cp -R &quot;${WORKSPACE_SSH_DIRECTORY_PATH}&quot; &quot;${PARAM_USER_HOME}&quot;/.ssh</span>
+          <span class="no">chmod 700 &quot;${PARAM_USER_HOME}&quot;/.ssh</span>
+          <span class="no">chmod -R 400 &quot;${PARAM_USER_HOME}&quot;/.ssh/*</span>
+        <span class="no">fi</span>
+
+        <span class="no">CHECKOUT_DIR=&quot;${WORKSPACE_OUTPUT_PATH}/${PARAM_SUBDIRECTORY}&quot;</span>
+
+        <span class="no">cleandir() {</span>
+          <span class="no"># Delete any existing contents of the repo directory if it exists.</span>
+          <span class="no">#</span>
+          <span class="no"># We don&#39;t just &quot;rm -rf ${CHECKOUT_DIR}&quot; because ${CHECKOUT_DIR} might be &quot;/&quot;</span>
+          <span class="no"># or the root of a mounted volume.</span>
+          <span class="no">if [ -d &quot;${CHECKOUT_DIR}&quot; ] ; then</span>
+            <span class="no"># Delete non-hidden files and directories</span>
+            <span class="no">rm -rf &quot;${CHECKOUT_DIR:?}&quot;/*</span>
+            <span class="no"># Delete files and directories starting with . but excluding ..</span>
+            <span class="no">rm -rf &quot;${CHECKOUT_DIR}&quot;/.[!.]*</span>
+            <span class="no"># Delete files and directories starting with .. plus any other character</span>
+            <span class="no">rm -rf &quot;${CHECKOUT_DIR}&quot;/..?*</span>
+          <span class="no">fi</span>
+        <span class="no">}</span>
+
+        <span class="no">if [ &quot;${PARAM_DELETE_EXISTING}&quot; = &quot;true&quot; ] ; then</span>
+          <span class="no">cleandir</span>
+        <span class="no">fi</span>
+
+        <span class="no">test -z &quot;${PARAM_HTTP_PROXY}&quot; || export HTTP_PROXY=&quot;${PARAM_HTTP_PROXY}&quot;</span>
+        <span class="no">test -z &quot;${PARAM_HTTPS_PROXY}&quot; || export HTTPS_PROXY=&quot;${PARAM_HTTPS_PROXY}&quot;</span>
+        <span class="no">test -z &quot;${PARAM_NO_PROXY}&quot; || export NO_PROXY=&quot;${PARAM_NO_PROXY}&quot;</span>
+
+        <span class="no">/ko-app/git-init \</span>
+          <span class="no">-url=&quot;${PARAM_URL}&quot; \</span>
+          <span class="no">-revision=&quot;${PARAM_REVISION}&quot; \</span>
+          <span class="no">-refspec=&quot;${PARAM_REFSPEC}&quot; \</span>
+          <span class="no">-path=&quot;${CHECKOUT_DIR}&quot; \</span>
+          <span class="no">-sslVerify=&quot;${PARAM_SSL_VERIFY}&quot; \</span>
+          <span class="no">-submodules=&quot;${PARAM_SUBMODULES}&quot; \</span>
+          <span class="no">-depth=&quot;${PARAM_DEPTH}&quot; \</span>
+          <span class="no">-sparseCheckoutDirectories=&quot;${PARAM_SPARSE_CHECKOUT_DIRECTORIES}&quot;</span>
+        <span class="no">cd &quot;${CHECKOUT_DIR}&quot;</span>
+        <span class="no">RESULT_SHA=&quot;$(git rev-parse HEAD)&quot;</span>
+        <span class="no">EXIT_CODE=&quot;$?&quot;</span>
+        <span class="no">if [ &quot;${EXIT_CODE}&quot; != 0 ] ; then</span>
+          <span class="no">exit &quot;${EXIT_CODE}&quot;</span>
+        <span class="no">fi</span>
+        <span class="no">printf &quot;%s&quot; &quot;${RESULT_SHA}&quot; &gt; &quot;$(results.commit.path)&quot;</span>
+        <span class="no">printf &quot;%s&quot; &quot;${PARAM_URL}&quot; &gt; &quot;$(results.url.path)&quot;</span>
+</code></pre></div>
+<p>A <code>Task</code> can have one or more <code>Steps</code>. Each step defines an image to run to perform the function of the step. The <code>git-clone</code> task has only one step called <code>clone</code> that uses a Tekton-provided container to clone a Git repo.</p>
+<p>A task can have <code>Parameters</code>. Parameters help to make a task reusable. This task accepts many parameters such as:</p>
+<ul>
+<li><code>url</code>, the Repository URL to clone from,</li>
+<li><code>revision</code>, the revision to check out (branch, tag, sha, ref, etc),</li>
+<li><code>subdirectory</code>, a subdirectory inside the output Workspace to clone the repo into,</li>
+<li><code>deleteExisting</code>, clean existing destination directory if it already exists before cloning, and more.</li>
+</ul>
+<p>Parameters can have default values provided by the task or the values can be provided by the <code>Pipeline</code> and <code>PipelineRun</code> resources as we will see later. Steps can reference parameter values by using the syntax <code>$(params.name)</code> where <code>name</code> is the name of the parameter. For example the step uses <code>$(params.url)</code> to reference the <code>url</code> parameter value.</p>
+<p>The task requires a <code>Workspace</code> where the clone is stored. From the point of view of the task, a workspace provides a file system path where it can read or write data.
+Steps can reference the path using the syntax <code>$(workspaces.name.path)</code> where <code>name</code> is the name of the workspace.
+We'll see later how the workspace becomes associated with a storage volume.</p>
+<p>Though the task has been defined and is available from the Tekton Hub, you still need to apply and create the Task in your OpenShift cluster. Apply the file to your cluster to create the task in your namespace,</p>
+<div class="highlight"><pre><span></span><code>$ oc apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.3/git-clone.yaml
+task.tekton.dev/git-clone created
+
+$ oc get tasks
+NAME        AGE
+git-clone   3m9s
+</code></pre></div>
+<h1 id="2-create-a-task-to-build-and-upload-container-image-using-kaniko">2. Create a Task to Build and Upload Container Image using Kaniko<a class="headerlink" href="#2-create-a-task-to-build-and-upload-container-image-using-kaniko" title="Permanent link">&para;</a></h1>
+<p>The next task that the pipeline needs is a task that builds a docker image and pushes it to a container registry. The catalog provides a <code>kaniko</code> task which does this using Google's <code>kaniko</code> tool. The task is described <a href="https://hub.tekton.dev/tekton/task/kaniko">here</a>.</p>
+<p>The task is reproduced below.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tekton.dev/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Task</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kaniko</span>
+  <span class="nt">labels</span><span class="p">:</span>
+    <span class="nt">app.kubernetes.io/version</span><span class="p">:</span> <span class="s">&quot;0.2&quot;</span>
+  <span class="nt">annotations</span><span class="p">:</span>
+    <span class="nt">tekton.dev/pipelines.minVersion</span><span class="p">:</span> <span class="s">&quot;0.12.1&quot;</span>
+    <span class="nt">tekton.dev/categories</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image Build</span>
+    <span class="nt">tekton.dev/tags</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">image-build</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">description</span><span class="p">:</span> <span class="p p-Indicator">&gt;-</span>
+    <span class="no">This Task builds source into a container image using Google&#39;s kaniko tool.</span>
+
+    <span class="no">Kaniko doesn&#39;t depend on a Docker daemon and executes each</span>
+    <span class="no">command within a Dockerfile completely in userspace. This enables</span>
+    <span class="no">building container images in environments that can&#39;t easily or</span>
+    <span class="no">securely run a Docker daemon, such as a standard Kubernetes cluster.</span>
+
+  <span class="nt">params</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IMAGE</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Name (reference) of the image to build.</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DOCKERFILE</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Path to the Dockerfile to build.</span>
+    <span class="nt">default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./Dockerfile</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONTEXT</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The build context used by Kaniko.</span>
+    <span class="nt">default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EXTRA_ARGS</span>
+    <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BUILDER_IMAGE</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The image on which builds will run (default is v1.5.1)</span>
+    <span class="nt">default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcr.io/kaniko-project/executor:v1.5.1@sha256:c6166717f7fe0b7da44908c986137ecfeab21f31ec3992f6e128fff8a94be8a5</span>
+  <span class="nt">workspaces</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">source</span>
+  <span class="nt">results</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IMAGE-DIGEST</span>
+    <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Digest of the image just built.</span>
+  <span class="nt">steps</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">build-and-push</span>
+    <span class="nt">workingDir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(workspaces.source.path)</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.BUILDER_IMAGE)</span>
+    <span class="c1"># specifying DOCKER_CONFIG is required to allow kaniko to detect docker credential</span>
+    <span class="c1"># https://github.com/tektoncd/pipeline/pull/706</span>
+    <span class="nt">env</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">DOCKER_CONFIG</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/tekton/home/.docker</span>
+    <span class="nt">args</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">$(params.EXTRA_ARGS)</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--dockerfile=$(params.DOCKERFILE)</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--context=$(workspaces.source.path)/$(params.CONTEXT)</span>  <span class="c1"># The user does not need to care the workspace and the source.</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--destination=$(params.IMAGE)</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--oci-layout-path=$(workspaces.source.path)/$(params.CONTEXT)/image-digest</span>
+    <span class="c1"># kaniko assumes it is running as root, which means this example fails on platforms</span>
+    <span class="c1"># that default to run containers as random uid (like OpenShift). Adding this securityContext</span>
+    <span class="c1"># makes it explicit that it needs to run as root.</span>
+    <span class="nt">securityContext</span><span class="p">:</span>
+      <span class="nt">runAsUser</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">write-digest</span>
+    <span class="nt">workingDir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(workspaces.source.path)</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/imagedigestexporter:v0.16.2</span>
+    <span class="c1"># output of imagedigestexport [{&quot;key&quot;:&quot;digest&quot;,&quot;value&quot;:&quot;sha256:eed29..660&quot;,&quot;resourceRef&quot;:{&quot;name&quot;:&quot;myrepo/myimage&quot;}}]</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;/ko-app/imagedigestexporter&quot;</span><span class="p p-Indicator">]</span>
+    <span class="nt">args</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-images=[{&quot;name&quot;:&quot;$(params.IMAGE)&quot;,&quot;type&quot;:&quot;image&quot;,&quot;url&quot;:&quot;$(params.IMAGE)&quot;,&quot;digest&quot;:&quot;&quot;,&quot;OutputImageDir&quot;:&quot;$(workspaces.source.path)/$(params.CONTEXT)/image-digest&quot;}]</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-terminationMessagePath=$(params.CONTEXT)/image-digested</span>
+    <span class="nt">securityContext</span><span class="p">:</span>
+      <span class="nt">runAsUser</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">digest-to-results</span>
+    <span class="nt">workingDir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(workspaces.source.path)</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">docker.io/stedolan/jq@sha256:a61ed0bca213081b64be94c5e1b402ea58bc549f457c2682a86704dd55231e09</span>
+    <span class="nt">script</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+      <span class="no">cat $(params.CONTEXT)/image-digested | jq &#39;.[0].value&#39; -rj | tee /tekton/results/IMAGE-DIGEST</span>
+</code></pre></div>
+<p>You can see that this task needs a workspace as well.</p>
+<div class="highlight"><pre><span></span><code>workspaces:
+  - name: source
+</code></pre></div>
+<p>This workspace has the source to be build. The pipeline will provide the same workspace that it used for the <code>git-clone</code> task.</p>
+<p>The <code>kaniko</code> task also uses a feature called <code>results</code>. A result is a value produced by a task which can then be used as a parameter value to other tasks. This task declares a result named <code>IMAGE-DIGEST</code> which it sets to the digest of the built image. A task sets a result by writing it to a file named <code>/tekton/results/name</code> where <code>name</code> refers to the name of the result, in this case <code>IMAGE-DIGEST</code>. We will see later how the pipeline uses this result.</p>
+<div class="highlight"><pre><span></span><code>results:
+  - name: IMAGE-DIGEST
+</code></pre></div>
+<p>We will cover how the task authenticates to the image repository for permission to push the image later.</p>
+<p>First, apply the file to your cluster and create the <code>kaniko</code> task in your namespace.</p>
+<div class="highlight"><pre><span></span><code>$ oc apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/kaniko/0.2/kaniko.yaml
+task.tekton.dev/kaniko created
+
+$ oc get tasks
+NAME        AGE
+git-clone   48m
+kaniko      3m9s
+</code></pre></div>
+<h1 id="3-create-a-task-to-deploy-an-image-to-openshift">3. Create a Task to Deploy an Image to OpenShift<a class="headerlink" href="#3-create-a-task-to-deploy-an-image-to-openshift" title="Permanent link">&para;</a></h1>
+<p>The final function that the pipeline needs is a task that deploys a docker image to a Kubernetes cluster.</p>
+<p>Below is a Tekton task that does this.
+You can find this yaml file at <a href="https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/tasks/deploy-using-kubectl.yaml">tekton/tasks/deploy-using-kubectl.yaml</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tekton.dev/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Task</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deploy-using-kubectl</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">workspaces</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The git repo</span>
+  <span class="nt">params</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pathToYamlFile</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The path to the yaml file to deploy within the git source</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageUrl</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image name including repository</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageTag</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image tag</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;latest&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageDigest</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Digest of the image to be used.</span>
+  <span class="nt">steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">update-yaml</span>
+      <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">alpine</span>
+      <span class="nt">command</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;sed&quot;</span><span class="p p-Indicator">]</span>
+      <span class="nt">args</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;-i&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;-e&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;s;__IMAGE__;$(params.imageUrl):$(params.imageTag);g&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;-e&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;s;__DIGEST__;$(params.imageDigest);g&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;$(workspaces.git-source.path)/$(params.pathToYamlFile)&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">run-kubectl</span>
+      <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lachlanevenson/k8s-kubectl</span>
+      <span class="nt">command</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;kubectl&quot;</span><span class="p p-Indicator">]</span>
+      <span class="nt">args</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;apply&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;-f&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="s">&quot;$(workspaces.git-source.path)/$(params.pathToYamlFile)&quot;</span>
+</code></pre></div>
+<p>This task has two steps.</p>
+<ol>
+<li>
+<p>The first step runs the <code>sed</code> command in an Alpine Linux container and updates the yaml file used for deployment. This step replaces the default image reference <code>__IMAGE__</code> by the image that was built by the <code>kaniko</code> task <code>__DIGEST__</code>. This step requires the yaml file to have two character strings, <code>__IMAGE__</code> and <code>__DIGEST__</code>, which are substituted with parameter values.</p>
+</li>
+<li>
+<p>The second step runs the <code>kubectl</code> command using a <code>k8s-kubectl</code> container image by Lachlan Evenson, to apply the yaml file to the same cluster where the pipeline is running.</p>
+</li>
+</ol>
+<p>As was the case in the <code>git-clone</code> and <code>kaniko</code> tasks, this task makes use of parameters in order to make the task as reusable as possible. It also needs the workspace to get the deployment yaml file.</p>
+<p>How the task authenticates to the cluster for permission to apply the resource(s) in the yaml file, is covered later on in the tutorial.</p>
+<p>Apply the file to your cluster to create the task <code>deploy-using-kubectl</code> in your namespace.</p>
+<div class="highlight"><pre><span></span><code>$ oc apply -f tekton/tasks/deploy-using-kubectl.yaml
+task.tekton.dev/deploy-using-kubectl created
+
+$ oc get tasks
+NAME                   AGE
+deploy-using-kubectl   54s
+git-clone              3h3m
+kaniko                 138m
+</code></pre></div>
+<h1 id="4-create-a-pipeline">4. Create a Pipeline<a class="headerlink" href="#4-create-a-pipeline" title="Permanent link">&para;</a></h1>
+<p>Now we created all the tasks that we need , we need to create a pipeline definition <code>build-and-deploy-pipeline</code> that defines how to run our tasks. Below is a Tekton pipeline that runs the tasks we created above. You can find this yaml file at <a href="https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml">https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline/build-and-deploy-pipeline.yaml</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tekton.dev/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pipeline</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">build-and-deploy-pipeline</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">workspaces</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The git repo</span>
+  <span class="nt">params</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gitUrl</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Git repository url</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pathToContext</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The path to the build context, used by Kaniko - within the workspace</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">src</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pathToYamlFile</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">The path to the yaml file to deploy within the git source</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageUrl</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image name including repository</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageTag</span>
+      <span class="nt">description</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Image tag</span>
+      <span class="nt">default</span><span class="p">:</span> <span class="s">&quot;latest&quot;</span>
+  <span class="nt">tasks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">clone-repo</span>
+      <span class="nt">taskRef</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-clone</span>
+      <span class="nt">workspaces</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">output</span>
+          <span class="nt">workspace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+      <span class="nt">params</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">url</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;$(params.gitUrl)&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdirectory</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;.&quot;</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deleteExisting</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;true&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">build-and-push-image</span>
+      <span class="nt">taskRef</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kaniko</span>
+      <span class="nt">runAfter</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">clone-repo</span>
+      <span class="nt">workspaces</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">source</span>
+          <span class="nt">workspace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+      <span class="nt">params</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONTEXT</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.pathToContext)</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IMAGE</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.imageUrl):$(params.imageTag)</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deploy-to-cluster</span>
+      <span class="nt">taskRef</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deploy-using-kubectl</span>
+      <span class="nt">workspaces</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+          <span class="nt">workspace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+      <span class="nt">params</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pathToYamlFile</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.pathToYamlFile)</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageUrl</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.imageUrl)</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageTag</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(params.imageTag)</span>
+        <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageDigest</span>
+          <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(tasks.build-and-push-image.results.IMAGE-DIGEST)</span>
+</code></pre></div>
+<p>A <code>Pipeline</code> resource contains a list of tasks to run. Each pipeline task is assigned a <code>name</code> within the pipeline;  here they are <code>clone-repo</code>, <code>build-and-push-image</code>, and <code>deploy-using-kubectl</code>. The pipeline configures each task via the task's parameters. You can choose whether to expose a task parameter as a pipeline parameter, set the value directly, or let the value
+default inside the task (if it's an optional parameter).  </p>
+<p>For example, our pipeline <code>build-and-deploy-pipeline</code> defines a parameter <code>pathToContext</code> that defaults to <code>src</code>. If you run the pipeline you can pass a value for this parameter and override the default. In the <code>build-and-push-image</code> task of the pipeline, a <code>CONTEXT</code> parameter is defined, which corresponds to the <code>CONTEXT</code> parameter that is defined in the <code>kaniko</code> task. The value of this parameter in the kaniko task will be set to the value that our pipeline parameter <code>pathToContext</code> is set to.</p>
+<p>However, the parameter <code>DOCKERFILE</code> that is defined in our <code>kaniko</code> task and there defaults to <code>./Dockerfile</code>, is not exposed in the pipeline under the <code>build-and-push-image</code> task that references the <code>kaniko</code> task. So the pipeline is not overriding the value of the <code>DOCKERFILE</code> parameter, and thus it defaults to the value <code>./Dockerfile</code>.</p>
+<p>Our <code>build-and-deploy-pipeline</code> pipeline also shows how to take the result of one task and pass it to another task. You saw earlier that the <code>kaniko</code> task defines a result named <code>IMAGE-DIGEST</code> that holds the digest of the built image.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">results</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IMAGE-DIGEST</span>
+</code></pre></div>
+<p>The pipeline passes that value to the <code>deploy-using-kubectl</code> task by using the syntax <code>$(tasks.build-and-push-image.results.IMAGE-DIGEST)</code> where <code>build-and-push-image</code> is the name used in the pipeline to run the <code>kaniko</code> task.</p>
+<p>By default Tekton assumes that pipeline tasks can be executed concurrently. In this pipeline each pipeline task depends on the previous one so they must be executed sequentially. One way that dependencies between pipeline tasks can be expressed is by using the <code>runAfter</code> key. It specifies that the task must run after the given list of tasks has completed. In this example, the pipeline specifies that the <code>build-and-push-image</code> pipeline task must run after the <code>clone-repo</code> pipeline task.</p>
+<p>The <code>deploy-using-kubectl</code> task must run after the <code>build-and-push-image</code> pipeline task, but it doesn't need to specify the <code>runAfter</code> key. This is because it references a task result from the <code>build-and-push-image</code> pipeline task and Tekton is smart enough to figure out that this means it must run after that task.</p>
+<p>Apply the file to your cluster to create the pipeline in your namespace.</p>
+<div class="highlight"><pre><span></span><code>$ oc apply -f tekton/pipeline/build-and-deploy-pipeline.yaml
+pipeline.tekton.dev/build-and-deploy-pipeline created
+
+$ oc get pipelines
+NAME                        AGE
+build-and-deploy-pipeline   17d
+</code></pre></div>
+<h1 id="5-define-a-service-account">5. Define a Service Account<a class="headerlink" href="#5-define-a-service-account" title="Permanent link">&para;</a></h1>
+<p>Before running the pipeline, we need to set up a service account. In OpenShift, a service account is associated with a username and can be granted roles to control access to protected resources. A service account can use secrets containing credentials for authentication along with RBAC-related resources for permission to create and modify relevant Kubernetes resources.</p>
+<h2 id="set-up-ibm-cloud-container-registry-icr-as-a-private-registry-on-red-hat-openshift">Set up IBM Cloud Container Registry (ICR) as a private registry on Red Hat OpenShift<a class="headerlink" href="#set-up-ibm-cloud-container-registry-icr-as-a-private-registry-on-red-hat-openshift" title="Permanent link">&para;</a></h2>
+<p>Red Hat OpenShift on IBM Cloud clusters are also set up by default with an internal registry that stores images locally in your cluster. You can use either the internal registry on OpenShift or the private IBM Cloud Container Registry (ICR), in combination or separately. For instance, you could create an ImageStream on your cluster, pull copies of images in ICR to the internal private registry, and in a deployment use the image from the internal private registry.</p>
+<p>In this workshop, we use only the private IBM Cloud Container Registry (ICR). To access ICR, you need to <a href="https://cloud.ibm.com/docs/Registry?topic=Registry-registry_rhos">set up access to IBM Cloud Container Registry (ICR) as a private registry on Red Hat OpenShift</a>.</p>
+<p>Create a new IBM Cloud API Key or use an existing IBM Cloud API Key</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">USERNAME</span><span class="o">=</span>&lt;your username&gt;
+
+$ ibmcloud iam api-key-create <span class="nv">$USERNAME</span>-tekton-apikey -d <span class="s2">&quot;apikey for tekton task in openshift&quot;</span> --file apikey-tekton.json
+Creating API key user1-tekton-apikey under e65910fa61ce9072d64902d03f3d4774 as user1@email.com...OK
+API key user1-tekton-apikey was created
+Successfully save API key information to apikey-tekton.json
+
+$ <span class="nv">IBMCLOUD_APIKEY</span><span class="o">=</span><span class="k">$(</span>cat apikey-tekton.json <span class="p">|</span> jq -r <span class="s2">&quot;.apikey&quot;</span><span class="k">)</span>
+$ <span class="nb">echo</span> <span class="nv">$IBMCLOUD_APIKEY</span>
+
+$ oc create secret generic ibm-cr-push-secret --type<span class="o">=</span><span class="s2">&quot;kubernetes.io/basic-auth&quot;</span> --from-literal<span class="o">=</span><span class="nv">username</span><span class="o">=</span>iamapikey --from-literal<span class="o">=</span><span class="nv">password</span><span class="o">=</span><span class="nv">$IBMCLOUD_APIKEY</span>
+
+secret/ibm-cr-push-secret created
+
+$ oc annotate secret ibm-cr-push-secret tekton.dev/docker-0<span class="o">=</span>us.icr.io
+
+secret/ibm-cr-push-secret annotated
+
+$ <span class="nv">EMAIL</span><span class="o">=</span>user1v@email.com
+$ oc create secret docker-registry ibm-cr-pull-secret --docker-server<span class="o">=</span><span class="nv">$REGISTRY_ROUTE</span> --docker-username<span class="o">=</span>iamapikey --docker-password<span class="o">=</span><span class="nv">$IBMCLOUD_APIKEY</span> --docker-email<span class="o">=</span><span class="nv">$EMAIL</span>
+</code></pre></div>
+<p>Next, create a service account using the following yaml file at <a href="https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/pipeline-account.yaml">tekton/pipeline-account.yaml</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-account</span>
+<span class="nt">secrets</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ibm-cr-push-secret</span>
+
+<span class="nn">---</span>
+
+<span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kube-api-secret</span>
+  <span class="nt">annotations</span><span class="p">:</span>
+    <span class="nt">kubernetes.io/service-account.name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-account</span>
+<span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes.io/service-account-token</span>
+
+<span class="nn">---</span>
+
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Role</span>
+<span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-role</span>
+<span class="nt">rules</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">apiGroups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;&quot;</span><span class="p p-Indicator">]</span>
+  <span class="nt">resources</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;services&quot;</span><span class="p p-Indicator">]</span>
+  <span class="nt">verbs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;create&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;update&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;patch&quot;</span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">-</span> <span class="nt">apiGroups</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;apps&quot;</span><span class="p p-Indicator">]</span>
+  <span class="nt">resources</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;deployments&quot;</span><span class="p p-Indicator">]</span>
+  <span class="nt">verbs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;get&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;create&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;update&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;patch&quot;</span><span class="p p-Indicator">]</span>
+
+<span class="nn">---</span>
+
+<span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RoleBinding</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-role-binding</span>
+<span class="nt">roleRef</span><span class="p">:</span>
+  <span class="nt">apiGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io</span>
+  <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Role</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-role</span>
+<span class="nt">subjects</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-account</span>
+</code></pre></div>
+<p>This yaml creates the following Kubernetes resources:</p>
+<ul>
+<li>
+<p>A ServiceAccount named <code>pipeline-account</code>. The service account references the annotated <code>ibm-cr-push-secret</code> secret so that the pipeline authenticates to your private container registry when it pushes and pulls a container image from the private ICR.</p>
+</li>
+<li>
+<p>A Secret named <code>kube-api-secret</code> which contains a token (generated by Kubernetes) for accessing the Kubernetes API. This allows the pipeline to use <code>kubectl</code> or <code>oc</code> to talk to your cluster. In OpenShift, a controller loop ensures a Secret with an API token exists for ServiceAccounts. To create our own additional API token for our ServiceAccount, we need to create a Secret of type <code>kubernetes.io/service-account-token</code> with an annotation referencing the ServiceAccount. The controller will update it with a generated token.</p>
+</li>
+<li>
+<p>A Role named <code>pipeline-role</code> which provides the Resource-Based Access Control (RBAC) permissions needed for this pipeline to create and modify Kubernetes resources, respectively services and deployments.</p>
+</li>
+<li>
+<p>And a RoleBinding named <code>pipeline-role-binding</code>, which binds the Role to your Service Account.</p>
+</li>
+</ul>
+<p>Apply the file to your cluster to create the service account and related resources.</p>
+<div class="highlight"><pre><span></span><code>$ oc apply -f tekton/pipeline-account.yaml
+serviceaccount/pipeline-account created
+secret/kube-api-secret created
+role.rbac.authorization.k8s.io/pipeline-role created
+rolebinding.rbac.authorization.k8s.io/pipeline-role-binding created
+</code></pre></div>
+<p>Our pipeline-account is now authorized to get, create, update and patch services and deployments.</p>
+<h1 id="6-create-a-pipelinerun">6. Create a PipelineRun<a class="headerlink" href="#6-create-a-pipelinerun" title="Permanent link">&para;</a></h1>
+<p>You have defined and created a reusable Pipeline and Task resources for building and deploying an image. It is now time to define how to run the pipeline by creating a Tekton PipelineRun resource. You can find the yaml file for the PipelineRun at <a href="https://github.com/IBM/tekton-tutorial-openshift/blob/master/tekton/run/picalc-pipeline-run.yaml">tekton/run/picalc-pipeline-run.yaml</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tekton.dev/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PipelineRun</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">generateName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tekton101lab-pipelinerun-</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">pipelineRef</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">build-and-deploy-pipeline</span>
+  <span class="nt">params</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gitUrl</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/ibm/tekton-tutorial-openshift/</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pathToYamlFile</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kubernetes/picalc.yaml</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageUrl</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;REGISTRY&gt;/&lt;NAMESPACE&gt;/picalc</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imageTag</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;NAME&gt;-v1</span>
+  <span class="nt">serviceAccountName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pipeline-account</span>
+  <span class="nt">workspaces</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">git-source</span>
+      <span class="nt">persistentVolumeClaim</span><span class="p">:</span>
+        <span class="nt">claimName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">picalc-source-pvc</span>
+</code></pre></div>
+<p>Although this file is small there is a lot going on here.  Let's break it down from top to bottom:</p>
+<ul>
+<li>
+<p>The PipelineRun does not have a fixed name. It uses <code>generateName</code> to generate a name each time it is created using a prefix <code>tekton101lab-pipelinerun</code> and a hyphen. This is because a particular PipelineRun resource executes the pipeline only once. If you want to run the pipeline again, you cannot modify an existing PipelineRun resource to request it to re-run -- you must technically create a new PipelineRun resource. While you could use <code>name</code> to assign a unique name to your PipelineRun each time you create one, it is much easier to use <code>generateName</code> and a custom name appended by a hyphen, e.g. <code>tekton101lab-pipelinerun-</code>.</p>
+</li>
+<li>
+<p>The Pipeline resource is identified under the <code>pipelineRef</code> key and refers to the Pipeline resource we created earlier.</p>
+</li>
+<li>
+<p>Parameters exposed by the pipeline are set to specific values such as the Git repository to clone, the image to build, and the yaml file to deploy. This example builds a <a href="https://github.com/IBM/tekton-tutorial-openshift/blob/master/src/picalc.go">go program that calculates an approximation of pi</a> called <code>picalc</code>. The source includes a <a href="src/Dockerfile">Dockerfile</a> which runs tests, compiles the code, and builds an image for execution.</p>
+</li>
+</ul>
+<p>We have to edit the <code>picalc-pipeline-run.yaml</code> file to substitute the values of <code>&lt;REGISTRY&gt;</code> and <code>&lt;NAMESPACE&gt;</code> in the file with the information from your private container registry and the registry namespace. We found and set values for <code>REGISTRY_ROUTE</code> and <code>NAMESPACE</code> in the <a href="../0_setup/">setup</a> section of the workshop.</p>
+<p>Check the values for <code>REGISTRY_ROUTE</code> and <code>NAMESPACE</code> are set.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="nv">$REGISTRY_ROUTE</span>
+<span class="nb">echo</span> <span class="nv">$NAMESPACE</span>
+<span class="nb">echo</span> <span class="nv">$NAME</span>
+</code></pre></div>
+<p>This should set the <code>imageUrl</code> to <code>us.icr.io/tekton101lab/picalc</code>. Run the following <code>sed</code> commands,</p>
+<div class="highlight"><pre><span></span><code>sed -i <span class="s2">&quot;s/&lt;REGISTRY&gt;/</span><span class="nv">$REGISTRY_ROUTE</span><span class="s2">/g&quot;</span> tekton/run/picalc-pipeline-run.yaml
+sed -i <span class="s2">&quot;s/&lt;NAMESPACE&gt;/</span><span class="nv">$NAMESPACE</span><span class="s2">/g&quot;</span> tekton/run/picalc-pipeline-run.yaml
+sed -i <span class="s2">&quot;s/&lt;NAME&gt;/</span><span class="nv">$NAME</span><span class="s2">/g&quot;</span> tekton/run/picalc-pipeline-run.yaml
+
+cat tekton/run/picalc-pipeline-run.yaml
+</code></pre></div>
+<ul>
+<li>
+<p>The service account named <code>pipeline-account</code> which we created earlier is specified to provide the credentials needed for the pipeline to run successfully.</p>
+</li>
+<li>
+<p>The workspace used by the pipeline to clone the Git repository is mapped to a persistent volume claim which is a request for a storage volume.</p>
+</li>
+</ul>
+<p>Before you run the pipeline for the first time, you must create a persistent volume claim for the workspace.</p>
+<div class="highlight"><pre><span></span><code>$ oc create -f tekton/picalc-pipeline-pvc.yaml
+persistentvolumeclaim/picalc-source-pvc created
+</code></pre></div>
+<p>The persistent volume claim requests Kubernetes to obtain a storage volume. Since each PipelineRun references the same claim and thus the same volume, this means the PipelineRun can only be run serially to avoid conflicting use of the volume.</p>
+<p><strong>Note</strong> new <a href="https://github.com/tektoncd/pipeline/pull/2326">funtionality in Tekton</a> was merged to allow each PipelineRun to create its own persistent volume claim and thus use its own volume. This workshop will be updated to include this new functionality soon.</p>
+<p>Check that the persistent volume claim is bound before continuing.</p>
+<div class="highlight"><pre><span></span><code>$ oc get pvc picalc-source-pvc
+NAME                STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+picalc-source-pvc   Pending                                      ibmc-block-gold   23s
+
+$ oc get pvc picalc-source-pvc
+NAME                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+picalc-source-pvc   Bound    pvc-2ec590d9-13dc-4dbe-b9ee-473ca6e74c91   20Gi       RWO            ibmc-block-gold   78s
+</code></pre></div>
+<p>The PersistentVolumeClaim with storage class <code>ibmc-block-gold</code> uses dynamic provisioning to create the PersistentVolume for the PersistentVolumeClaim.</p>
+<div class="highlight"><pre><span></span><code>$ oc get pv
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                             STORAGECLASS     REASON   AGE
+pvc-15a4b091-f6f9-42f6-b3c3-a354a440acd0   20Gi       RWO            Delete           Bound    tekton101lab/picalc-source-pvc                                              7m23s
+pvc-f2618698-d7b7-4ba6-8b4b-2e162d55e6c8   100Gi      RWX            Delete           Bound    openshift-image-registry/image-registry-storage   ibmc-file-gold            22d
+</code></pre></div>
+<h1 id="7-run-the-pipeline">7. Run the Pipeline<a class="headerlink" href="#7-run-the-pipeline" title="Permanent link">&para;</a></h1>
+<p>All the pieces are in place to execute the pipelinerun by creating the PipelineRun resource in your cluster.</p>
+<div class="highlight"><pre><span></span><code>$ oc create -f tekton/run/picalc-pipeline-run.yaml
+pipelinerun.tekton.dev/picalc-pr-c7hsb created
+</code></pre></div>
+<p>Note that we're using <code>oc create</code> here instead of <code>oc apply</code>. As mentioned before, a given PipelineRun resource can run a pipeline only once, so you need to create a new PipelineRun each time you want to run the Pipeline. <code>kubectl</code> or <code>oc</code> will create the generated name of the PipelineRun resource.</p>
+<p>View the status of our pipeline run,</p>
+<div class="highlight"><pre><span></span><code>$ oc get pipelinerun
+NAME              SUCCEEDED   REASON    STARTTIME   COMPLETIONTIME
+picalc-pr-dqwqb   Unknown     Running   5s
+</code></pre></div>
+<p>The pipeline will be successful when <code>SUCCEEDED</code> is <code>True</code>.</p>
+<div class="highlight"><pre><span></span><code>$ oc get pipelinerun
+NAME              SUCCEEDED   REASON      STARTTIME   COMPLETIONTIME
+picalc-pr-x5qf9   True        Succeeded   2m58s       12s
+</code></pre></div>
+<p>Check the status of the Kubernetes deployment.  It should be ready.</p>
+<div class="highlight"><pre><span></span><code>$ oc get deploy picalc
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+picalc   <span class="m">1</span>/1     <span class="m">1</span>            <span class="m">1</span>           9m
+</code></pre></div>
+<p>You can curl the application using its NodePort service.
+First display the nodes and choose one of the node's external IP addresses.
+Then display the service to get its NodePort.</p>
+<div class="highlight"><pre><span></span><code>$ kubectl get nodes -o wide
+NAME           STATUS   ROLES    AGE     VERSION       INTERNAL-IP    EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+<span class="m">10</span>.221.22.11   Ready    &lt;none&gt;   7d23h   v1.16.8+IKS   <span class="m">10</span>.221.22.11   <span class="m">150</span>.238.236.26   Ubuntu <span class="m">18</span>.04.4 LTS   <span class="m">4</span>.15.0-96-generic   containerd://1.3.3
+<span class="m">10</span>.221.22.49   Ready    &lt;none&gt;   7d23h   v1.16.8+IKS   <span class="m">10</span>.221.22.49   <span class="m">150</span>.238.236.21   Ubuntu <span class="m">18</span>.04.4 LTS   <span class="m">4</span>.15.0-96-generic   containerd://1.3.3
+
+$ kubectl get svc picalc
+NAME     TYPE       CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>          AGE
+picalc   NodePort   <span class="m">172</span>.21.199.71   &lt;none&gt;        <span class="m">8080</span>:30925/TCP   9m
+
+$ <span class="nv">EXTERNAL_IP</span><span class="o">=</span><span class="m">150</span>.238.236.26
+$ <span class="nv">NODE_PORT</span><span class="o">=</span><span class="m">30925</span>
+$ curl <span class="nv">$EXTERNAL_IP</span>:<span class="nv">$NODE_PORT</span>?iterations<span class="o">=</span><span class="m">20000000</span>
+<span class="m">3</span>.1415926036
+</code></pre></div>
+<h2 id="debugging-a-failed-pipelinerun">Debugging a failed PipelineRun<a class="headerlink" href="#debugging-a-failed-pipelinerun" title="Permanent link">&para;</a></h2>
+<p>Let's take a look at what a PipelineRun failure would look like.
+Edit the PipelineRun yaml and change the gitUrl parameter to a non-existent Git repository to force a failure.
+Then create a new PipelineRun and describe it after letting it run for a minute or two.</p>
+<div class="highlight"><pre><span></span><code>$ kubectl create -f tekton/picalc-pipeline-run.yaml
+pipelinerun.tekton.dev/picalc-pr-sk7md created
+
+$ tkn pipelinerun describe picalc-pr-sk7md
+Name:              picalc-pr-sk7md
+Namespace:         default
+Pipeline Ref:      build-and-deploy-pipeline
+Service Account:   pipeline-account
+
+Status
+
+STARTED         DURATION     STATUS
+<span class="m">2</span> minutes ago   <span class="m">41</span> seconds   Failed
+
+Message
+
+TaskRun picalc-pr-sk7md-clone-repo-8gs25 has failed <span class="o">(</span><span class="p">&amp;</span><span class="c1">#34;step-clone&amp;#34; exited with code 1 (image: &amp;#34;gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init@sha256:bee98bfe6807e8f4e0a31b4e786fd1f7f459e653ed1a22b1a25999f33fa9134a&amp;#34;); for logs run: kubectl -n default logs picalc-pr-sk7md-clone-repo-8gs25-pod-v7fg8 -c step-clone)</span>
+
+Resources
+
+ No resources
+
+Params
+
+ NAME             VALUE
+ gitUrl           https://github.com/IBM/tekton-tutorial-not-there
+ pathToYamlFile   kubernetes/picalc.yaml
+ imageUrl         us.icr.io/gregd/picalc
+ imageTag         <span class="m">1</span>.0
+
+Taskruns
+
+ NAME                               TASK NAME    STARTED         DURATION     STATUS
+ picalc-pr-sk7md-clone-repo-8gs25   clone-repo   <span class="m">2</span> minutes ago   <span class="m">41</span> seconds   Failed
+</code></pre></div>
+<p>The output tells us that the <code>clone-repo</code> pipeline task failed.  The <code>Message</code> also tells us how to get the logs from the pod which was used to run the task:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> logs run: kubectl -n default logs picalc-pr-sk7md-clone-repo-8gs25-pod-v7fg8 -c step-clone
+</code></pre></div>
+<p>If you run that <code>kubectl logs</code> command you will see that there is a failure trying to fetch the non-existing Git repository.</p>
+<p>An even easier way to get the logs from a PipelineRun is to use the <code>tkn</code> CLI.</p>
+<div class="highlight"><pre><span></span><code>tkn pipelinerun logs picalc-pr-sk7md-clone-repo-8gs25-pod-v7fg8 -t clone-repo
+</code></pre></div>
+<p>If you omit the <code>-t</code> flag then the command will get the logs for all pipeline tasks that executed.</p>
+<p>You can also get the logs for the last PipelineRun for a particular Pipeline using this command:</p>
+<div class="highlight"><pre><span></span><code>tkn pipeline logs build-and-deploy-pipeline -L
+</code></pre></div>
+<p>You should delete a PipelineRun when you no longer have a need to reference its logs.  Deleting the PipelineRun deletes the pods that were used
+to run the pipeline tasks.</p>
+<h2 id="check-it-out-in-openshift-console">Check it out in OpenShift Console<a class="headerlink" href="#check-it-out-in-openshift-console" title="Permanent link">&para;</a></h2>
+<p>OpenShift provides a nice UI for the pipelines and the applications deployed. From the OpenShift console, click <strong>developer</strong> in the upper left drop-down to get to the developer view. Then click <strong>Topology</strong> to view your running app.</p>
+<p><img alt="OpenShift Topology" src="../../images/openshift-topology.png" /></p>
+<p>Click <strong>Pipelines</strong> to explore the pipline your created and explore the PipelineRuns</p>
+<p><img alt="OpenShift Pipelines" src="../../images/openshift-pipelines.png" /></p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>Tekton provides simple, easy-to-learn features for constructing CI/CD pipelines that run on Kubernetes. This tutorial covered the basics to get you started building your own pipelines. There are more features available and many more planned for upcoming releases.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 IBM Developer
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ibm" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/ibmdeveloper" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/ibm/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.youtube.com/user/developerworks" target="_blank" rel="noopener" title="www.youtube.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://dev.to/ibmdeveloper" target="_blank" rel="noopener" title="dev.to" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120.12 208.29c-3.88-2.9-7.77-4.35-11.65-4.35H91.03v104.47h17.45c3.88 0 7.77-1.45 11.65-4.35 3.88-2.9 5.82-7.25 5.82-13.06v-69.65c-.01-5.8-1.96-10.16-5.83-13.06zM404.1 32H43.9C19.7 32 .06 51.59 0 75.8v360.4C.06 460.41 19.7 480 43.9 480h360.2c24.21 0 43.84-19.59 43.9-43.8V75.8c-.06-24.21-19.7-43.8-43.9-43.8zM154.2 291.19c0 18.81-11.61 47.31-48.36 47.25h-46.4V172.98h47.38c35.44 0 47.36 28.46 47.37 47.28l.01 70.93zm100.68-88.66H201.6v38.42h32.57v29.57H201.6v38.41h53.29v29.57h-62.18c-11.16.29-20.44-8.53-20.72-19.69V193.7c-.27-11.15 8.56-20.41 19.71-20.69h63.19l-.01 29.52zm103.64 115.29c-13.2 30.75-36.85 24.63-47.44 0l-38.53-144.8h32.57l29.71 113.72 29.57-113.72h32.58l-38.46 144.8z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
