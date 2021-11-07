@@ -38,17 +38,12 @@ First display the nodes and choose one of the node's external IP addresses.
 Then display the service to get its NodePort.
 
 ```bash
-$ kubectl get nodes -o wide
-NAME           STATUS   ROLES    AGE     VERSION       INTERNAL-IP    EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-10.221.22.11   Ready    <none>   7d23h   v1.16.8+IKS   10.221.22.11   150.238.236.26   Ubuntu 18.04.4 LTS   4.15.0-96-generic   containerd://1.3.3
-10.221.22.49   Ready    <none>   7d23h   v1.16.8+IKS   10.221.22.49   150.238.236.21   Ubuntu 18.04.4 LTS   4.15.0-96-generic   containerd://1.3.3
+EXTERNAL_IP=$(oc get nodes -o wide -o json | jq -r '.items[0].status.addresses | .[] | select( .type=="ExternalIP" ) | .address ')
+echo $EXTERNAL_IP
 
-$ kubectl get svc picalc
-NAME     TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-picalc   NodePort   172.21.199.71   <none>        8080:30925/TCP   9m
+NODE_PORT=$(oc get svc picalc -n $NAMESPACE --output json | jq -r '.spec.ports[0].nodePort' )
+echo $NODE_PORT
 
-$ EXTERNAL_IP=150.238.236.26
-$ NODE_PORT=30925
 $ curl $EXTERNAL_IP:$NODE_PORT?iterations=20000000
 3.1415926036
 ```
@@ -60,7 +55,7 @@ Edit the PipelineRun yaml and change the gitUrl parameter to a non-existent Git 
 Then create a new PipelineRun and describe it after letting it run for a minute or two.
 
 ```bash
-$ kubectl create -f tekton/picalc-pipeline-run.yaml
+$ oc create -f tekton/run/picalc-pipeline-run.yaml
 pipelinerun.tekton.dev/picalc-pr-sk7md created
 
 $ tkn pipelinerun describe picalc-pr-sk7md
