@@ -14,6 +14,12 @@ Tekton is an open source project to configure and run CI/CD pipelines within a O
 | 5. Scan Running Containers in OpenShift | lab5 (coming soon)  |
 | 6. Governance, Risk and Compliance (GRC) using Security and Compliance Center (SCC) | lab6 (coming soon)  |
 
+### Extra
+
+| Module      | Description                          |
+| ----------- | ------------------------------------ |
+| Extra 1: Create a Basic Pipeline using Tekton on Kubernetes | [extra1](extra/lab1/1_clone-git-repo.md) |
+
 ## Introduction
 
 In this learning path you learn:

@@ -169,9 +169,11 @@ Though the task has been defined and is available from the Tekton Hub, you still
 
 ```bash
 $ oc apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.3/git-clone.yaml
+
 task.tekton.dev/git-clone created
 
 $ oc get tasks
+
 NAME        AGE
 git-clone   3m9s
 ```

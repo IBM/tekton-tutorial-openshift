@@ -24,8 +24,17 @@ In your IBM Cloud account, open a new instance of [IBM Cloud Shell](https://clou
 Target the same region as your OpenShift cluster. In this tutorial, I am using a cluster in the region `us-south`.
 
 ```bash
-REGION=us-south
+export REGION=<us-south>
 ibmcloud target -r $REGION
+```
+
+## Target a Resource Group
+
+Target the same resource group as your OpenShift cluster. In this tutorial, I am using a cluster in the resource group `advowork-labs`.
+
+```bash
+export RESOURCE_GROUP=<advowork-labs>
+ibmcloud target -r $RESOURCE_GROUP
 ```
 
 ## Git repository containing Tekton resources
@@ -54,27 +63,19 @@ Registry API endpoint   https://us.icr.io/api
 OK
 ```
 
-Create environment variables for the registry route and a namespace in your registry. Both variables will be used in the rest of the workshop. Create the registry namespace.
+Create environment variables for the registry route and a namespace in your registry. Both variables will be used in the rest of the workshop. You can use an existing namespace or create a new registry namespace.
+
+Since everybody in the lab will be pushing to the same namespace in the registry, we need a way to differentiate each other's images. Add a username to the image tag. In the following command, substitute `<username>`.
 
 ```bash
 $ ibmcloud cr namespace-list
 Listing namespaces for account 'IBM Client Developer Advocacy' in registry 'us.icr.io'...
 ...
 
-REGISTRY_ROUTE=us.icr.io
-NAMESPACE=advowork
-```
+$ export REGISTRY_ROUTE=<us.icr.io>
+$ export NAMESPACE=<username>
 
-Since everybody in the lab will be pushing to the same namespace in the registry, we need a way to differentiate each other's images. We can do this by adding your name to the image tag. In the following command, substitute `<name>` with your first name.
-
-```sh
-NAME=<name>
-```
-
-For example,
-
-```sh
-$ NAME=oliver
+$ ibmcloud cr namespace-add $NAMESPACE
 ```
 
 ## IBM Cloud Red Hat OpenShift Kubernetes Service (ROKS)
@@ -85,7 +86,7 @@ Connect to your OpenShift cluster from the terminal using the login command from
 oc login --token=sha256~ZBMKw9VAayhdnyANaHvjJeXDiGwA7Fsr5gtLKj3-ehE --server=https://d107-f.us-south.containers.cloud.ibm.com:30271
 ```
 
-If you need to retrieve the login command, follow [these instructions](https://ibm.github.io/workshop-setup/ROKS/).
+If you need to retrieve the login command or if you need an alternative method to login, follow [these instructions](https://ibm.github.io/workshop-setup/ROKS/).
 
 ## OpenShift Pipelines
 
@@ -110,19 +111,19 @@ Optional: You can also install OpenShift Pipelines through the OpenShift Console
 Create a new project or namespace, you can use the same name as for the container registry, though they are not related.
 
 ```bash
-$ oc new-project tekton101lab
+$ oc new-project $NAMESPACE
 
-Now using project "tekton101lab" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
+Now using project "<username>" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
 You can add applications to this project with the 'new-app' command. For example, try:
     oc new-app rails-postgresql-example
 to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
     kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 ```
 
-Or change the current project to `tekton101lab`,
+Or change the current project,
 
 ```bash
-oc project tekton101lab
+oc project $NAMESPACE
 ```
 
 ## Next
