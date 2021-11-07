@@ -18,7 +18,7 @@ spec:
     - name: imageUrl
       value: <REGISTRY>/<NAMESPACE>/picalc
     - name: imageTag
-      value: "1.0"
+      value: <NAME>-v1
   serviceAccountName: pipeline-account
   workspaces:
     - name: git-source
@@ -41,15 +41,14 @@ Check the values for `REGISTRY_ROUTE` and `NAMESPACE` are set.
 ```bash
 echo $REGISTRY_ROUTE
 echo $NAMESPACE
-echo $USERNAME
 ```
 
-This should set the `imageUrl` to `us.icr.io/tekton101lab/picalc`. Run the following `sed` commands,
+This should set the `imageUrl` to `us.icr.io/<username>/picalc`. Run the following `sed` commands,
 
 ```bash
 sed -i "s/<REGISTRY>/$REGISTRY_ROUTE/g" tekton/run/picalc-pipeline-run.yaml
 sed -i "s/<NAMESPACE>/$NAMESPACE/g" tekton/run/picalc-pipeline-run.yaml
-sed -i "s/<NAME>/$USERNAME/g" tekton/run/picalc-pipeline-run.yaml
+sed -i "s/<NAME>/$NAMESPACE/g" tekton/run/picalc-pipeline-run.yaml
 
 cat tekton/run/picalc-pipeline-run.yaml
 ```

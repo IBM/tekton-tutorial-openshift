@@ -65,13 +65,15 @@ OK
 
 Create environment variables for the registry route and a namespace in your registry. Both variables will be used in the rest of the workshop. You can use an existing namespace or create a new registry namespace.
 
+Since everybody in the lab will be pushing to the same namespace in the registry, we need a way to differentiate each other's images. Add a username to the image tag. In the following command, substitute `<username>`.
+
 ```bash
 $ ibmcloud cr namespace-list
 Listing namespaces for account 'IBM Client Developer Advocacy' in registry 'us.icr.io'...
 ...
 
 $ export REGISTRY_ROUTE=<us.icr.io>
-$ export NAMESPACE=tekton101lab
+$ export NAMESPACE=<username>
 
 $ ibmcloud cr namespace-add $NAMESPACE
 ```
@@ -96,7 +98,13 @@ NAME                                                  AGE
 openshift-pipelines-operator-rh.openshift-operators   12d
 ```
 
-To install OpenShift Pipelines, follow [this guide on installing Red Hat OpenShift Pipelines](https://ibm.github.io/workshop-setup/PIPELINES/).
+To install OpenShift Pipelines, run the following command:
+
+```sh
+oc apply -f src/pipelinesOperatorSubscription.yaml
+```
+
+Optional: You can also install OpenShift Pipelines through the OpenShift Console by following [this guide on installing Red Hat OpenShift Pipelines](https://ibm.github.io/workshop-setup/PIPELINES/).
 
 ## Create a New Project
 
@@ -105,7 +113,7 @@ Create a new project or namespace, you can use the same name as for the containe
 ```bash
 $ oc new-project $NAMESPACE
 
-Now using project "tekton101lab" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
+Now using project "<username>" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
 You can add applications to this project with the 'new-app' command. For example, try:
     oc new-app rails-postgresql-example
 to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
