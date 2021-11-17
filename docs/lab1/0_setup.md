@@ -46,21 +46,24 @@ The IBM Cloud Shell already has a Container Registry CLI plugin installed. Set t
 ```bash
 $ ibmcloud cr 
 $ ibmcloud cr region-set $REGION
-The region is set to 'us-south', the registry is 'us.icr.io'.
-OK
-
+```
+*The region is set to 'us-south', the registry is 'us.icr.io'.
+*OK
+```bash
 $ ibmcloud cr api                         
 Registry API endpoint   https://us.icr.io/api   
-OK
 ```
+*OK
+
 
 Create environment variables for the registry route and a namespace in your registry. Both variables will be used in the rest of the workshop. Create the registry namespace.
 
 ```bash
 $ ibmcloud cr namespace-list
-Listing namespaces for account 'IBM Client Developer Advocacy' in registry 'us.icr.io'...
-...
-
+```
+*Listing namespaces for account 'IBM Client Developer Advocacy' in registry 'us.icr.io'...
+*...
+```bash
 REGISTRY_ROUTE=us.icr.io
 NAMESPACE=advowork
 ```
@@ -93,9 +96,10 @@ Before you start the tutorial you must have access to an OpenShift environment w
 
 ```bash
 $ oc get operators
-NAME                                                  AGE
-openshift-pipelines-operator-rh.openshift-operators   12d
 ```
+*NAME                                                  AGE
+*openshift-pipelines-operator-rh.openshift-operators   12d
+
 
 To install OpenShift Pipelines, run the following command:
 
@@ -111,13 +115,12 @@ Create a new project or namespace, you can use the same name as for the containe
 
 ```bash
 $ oc new-project tekton101lab
-
-Now using project "tekton101lab" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
-You can add applications to this project with the 'new-app' command. For example, try:
-    oc new-app rails-postgresql-example
-to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
-    kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 ```
+*Now using project "tekton101lab" on server "https://d107-f.us-south.containers.cloud.ibm.com:30271".
+*You can add applications to this project with the 'new-app' command. For example, try:
+*oc new-app rails-postgresql-example
+*to build a new example application in Ruby. Or use kubectl to deploy a simple Kubernetes application:
+    *kubectl create deployment hello-node --image=k8s.gcr.io/serve_hostname
 
 Or change the current project to `tekton101lab`,
 
