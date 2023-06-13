@@ -18,7 +18,7 @@ spec:
       description: Digest of the image to be used.
   steps:
     - name: update-yaml
-      image: alpine
+      image: cgr.dev/chainguard/wolfi-base
       command: ["sed"]
       args:
         - "-i"

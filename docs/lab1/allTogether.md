@@ -443,7 +443,7 @@ spec:
       description: Digest of the image to be used.
   steps:
     - name: update-yaml
-      image: alpine
+      image: cgr.dev/chainguard/wolfi-base
       command: ["sed"]
       args:
         - "-i"
@@ -463,7 +463,7 @@ spec:
 
 This task has two steps.
 
-1. The first step runs the `sed` command in an Alpine Linux container and updates the yaml file used for deployment. This step replaces the default image reference `__IMAGE__` by the image that was built by the `kaniko` task `__DIGEST__`. This step requires the yaml file to have two character strings, `__IMAGE__` and `__DIGEST__`, which are substituted with parameter values.
+1. The first step runs the `sed` command in an Wolfi container and updates the yaml file used for deployment. This step replaces the default image reference `__IMAGE__` by the image that was built by the `kaniko` task `__DIGEST__`. This step requires the yaml file to have two character strings, `__IMAGE__` and `__DIGEST__`, which are substituted with parameter values.
 
 2. The second step runs the `kubectl` command using a `k8s-kubectl` container image by Lachlan Evenson, to apply the yaml file to the same cluster where the pipeline is running.
 

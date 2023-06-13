@@ -5,7 +5,7 @@ FROM golang:1.12 as builder
 
 # Copy local code to the container image.
 WORKDIR /go/src/github.com/IBM/tekton-tutorial
-COPY picalc.go picalc_test.go .
+COPY picalc.go picalc_test.go ./
 
 # Run unit tests
 RUN CGO_ENABLED=0 GOOS=linux go test
@@ -15,7 +15,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -v -o picalc
 
 # Use a Docker multi-stage build to create a lean production image.
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
-FROM alpine
+FROM cgr.dev/chainguard/wolfi-base
 
 # Copy the binary to the production image from the builder stage.
 COPY --from=builder /go/src/github.com/IBM/tekton-tutorial/picalc /picalc
